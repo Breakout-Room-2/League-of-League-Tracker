@@ -1,9 +1,5 @@
 # League-of-League-Tracker
 
-# README Template
-
-Your [design product spec](https://hackmd.io/s/H1wGpVUh7) (described in that link) will look like the following in your README:
-
 ## 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
@@ -29,13 +25,14 @@ Your [design product spec](https://hackmd.io/s/H1wGpVUh7) (described in that lin
    * List of recent matches with small amount of impo. stats on view
    * Should be able to click on match to get more detail (implementation tbd) 
  * Match detail screen / Dropdown? (TBD) 
+ * ...
 
 ## 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
  * Summoner search screen
- * 
+ * ...
 
 **Flow Navigation** (Screen to Screen)
 
