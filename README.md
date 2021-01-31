@@ -8,30 +8,34 @@ Your [design product spec](https://hackmd.io/s/H1wGpVUh7) (described in that lin
 
 **Required Must-have Stories**
 
- * [fill in your required user stories here]
+ * User can search stats by summoner name
+ * User can view recent match history 
+ * User can click/tap on a match for more info
+ * User can see current ranking and graph of win/loss ratio
  * ...
 
 **Optional Nice-to-have Stories**
 
- * [fill in your required user stories here]
+ * Infinite pagination for match history - recent 10 can be continually expanded to more matches
+ * Favorites/Recent searches in 
  * ...
 
 ## 2. Screen Archetypes
 
- * [list first screen here]
-   * [list associated required story here]
-   * ...
- * [list second screen here]
-   * [list associated required story here]
-   * ...
+ * Summoner Search screen (Login)
+   * Input bar for user to specify the summoner to get stats for
+   * Favourites/Recent searches bar
+ * Summoner Stats screen (Stream/Feed)
+   * List of recent matches with small amount of impo. stats on view
+   * Should be able to click on match to get more detail (implementation tbd) 
+ * Match detail screen / Dropdown? (TBD) 
 
 ## 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
- * [fill out your first tab]
- * [fill out your second tab]
- * [fill out your third tab]
+ * Summoner search screen
+ * 
 
 **Flow Navigation** (Screen to Screen)
 
