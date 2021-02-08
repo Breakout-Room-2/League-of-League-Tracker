@@ -50,6 +50,29 @@ function Get_MatchDetail($match_id){
     $api_request = "/lol/match/v4/matches/";
     return Make_curl_Request $api_request $match_id;
 }
+
+# API call for champion masteries from encrypted summoner ID and return reponse
+function Get_Masteries($summoner_id){
+    $api_request = "/lol/champion-mastery/v4/champion-masteries/by-summoner/";
+    return Make_curl_Request $api_request $summoner_id | ConvertFrom-Json -AsHashtable;
+}
+
+# Resolves ID found in API responses to champions
+function Get_ChampByID($champID){
+    $champ_page = "/cdn/11.3.1/data/en_US/champion.json";
+    $champions = "ddragon\chapmion.json";
+
+    if(!(Test-Path $champions)){
+        curl -s "$datadragon$champ_page" > $champions;
+    }
+    $champions = (Get-Content $champions | ConvertFrom-Json -AsHashtable).data;
+
+    $champions.Values | foreach{
+        if ($_.key -eq $champID){
+            return $_;
+        }
+    }
+}
 # -----------------------------------------------------------------------------
 #                        End of helper functions
 
@@ -58,6 +81,7 @@ function Get_MatchDetail($match_id){
 
 # Define API host to the north american platform host
 $api_host = "https://na1.api.riotgames.com";
+$datadragon = "http://ddragon.leagueoflegends.com";
 
 # If dev_key does not exist or has expired (24 hours since last write)
 # prompt user for dev_key and write to file
@@ -78,13 +102,17 @@ if(!$summoner){
     $summoner = Read-Host -Prompt "Summoner";
 }
 
-# Extract account_id from summoner info
-$account_id = (Get_Summoner_Info($summoner)).accountId;
+# Summoner info is needed for pretty much any additional API calls concerning
+# the summoner in question
+# Account_ID, and encrtyped summoner ID are needed for matchlist and masteries
+$account = Get_Summoner_Info($summoner);
+$account_id = $account.accountId;
+$summoner_id = $account.id;
 
 # Get matchlist as a powershell object
 $matchlist = (Get_MatchList($account_id)).matches;
 
-# Make a directory to store match details called 'matchlist'
+# Make a directory to store match details called 'matchlist' if nonexist
 if(!(Test-Path matchlist)){
     New-Item -ItemType Directory matchlist | Out-Null;
 }
@@ -106,5 +134,13 @@ for ($index = 0; $index -lt 10; $index++){
         Get_MatchDetail($match_id) | python -m json.tool > $path;
     }
 }
+
+$masteries = @{};
+
+(Get_Masteries($summoner_id))[0..2] | foreach{
+    $masteries.add((Get_ChampByID($_.championId)).id, $_.championPoints);
+}
+
+$masteries;
 # -----------------------------------------------------------------------------
 #                        End of 'main' code
