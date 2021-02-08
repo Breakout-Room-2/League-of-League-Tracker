@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/powershell_testing/Data
+/powershell_testing/matchlist
+/powershell_testing/dev_key
