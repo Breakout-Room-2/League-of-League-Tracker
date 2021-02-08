@@ -1,11 +1,3 @@
-#                   Beginning of API Definitions
-# -----------------------------------------------------------------------------
-# Set API_host and get API key from file
-$api_key = Get-Content dev_key;
-$api_host = "https://na1.api.riotgames.com";
-# -----------------------------------------------------------------------------
-#                   End of API Definitions
-
 #                   Beginning of Helper functions
 # -----------------------------------------------------------------------------
 # Define a generic API call method using Invoke-RestMethod
@@ -22,8 +14,9 @@ function Make_API_Request($api_request, $request_inp){
     $url = "$api_host$api_request$encoded_input";
     Write-Host "Making a request to: $url";
 
-# Read-Host for debugging, user can distrupt script before call is made
+# Read-Host can be placed here to debug (disrupt before sending request)
     Read-Host;
+
     return Invoke-RestMethod "$url`?api_key=$api_key";
 }
 
@@ -36,7 +29,7 @@ function Make_curl_Request($api_request, $request_inp){
     $encoded_input = [System.Web.HttpUtility]::UrlEncode($request_inp);
     $url = "$api_host$api_request$encoded_input";
     Write-Host "Making a request to: $url";
-    Read-Host;
+
     return curl -s "$url`?api_key=$api_key";
 }
 
@@ -62,10 +55,27 @@ function Get_MatchDetail($match_id){
 
 #                        Beginning of 'main' code
 # -----------------------------------------------------------------------------
+
+# Define API host to the north american platform host
+$api_host = "https://na1.api.riotgames.com";
+
+# If dev_key does not exist or has expired (24 hours since last write)
+# prompt user for dev_key and write to file
+if(!(Test-Path dev_key)){
+    Read-Host -AsSecureString -Prompt "API Key" | ConvertFrom-SecureString -AsPlainText > dev_key;
+}
+else{
+    $expired = ($(Get-Date) - $((Get-Item .\dev_key).LastWriteTime)).Days;
+    if($expired){
+        Read-Host -AsSecureString -Prompt "API Key" | ConvertFrom-SecureString -AsPlainText > dev_key;
+    }
+}
+$api_key = Get-Content dev_key;
+
 # Try to summoner name from commandline args, otherwise prompt user
 $summoner = $args[0];
 if(!$summoner){
-    $summoner = Read-Host("Summoner");
+    $summoner = Read-Host -Prompt "Summoner";
 }
 
 # Extract account_id from summoner info
@@ -76,7 +86,7 @@ $matchlist = (Get_MatchList($account_id)).matches;
 
 # Make a directory to store match details called 'matchlist'
 if(!(Test-Path matchlist)){
-    New-Item -ItemType Directory matchlist;
+    New-Item -ItemType Directory matchlist | Out-Null;
 }
 
 # Iterate through the first 10 matches and extract gameID
