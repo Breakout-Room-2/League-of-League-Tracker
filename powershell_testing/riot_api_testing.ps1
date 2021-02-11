@@ -58,19 +58,27 @@ function Get_MatchDetail($match_id){
 
 # Define API host to the north american platform host
 $api_host = "https://na1.api.riotgames.com";
+$no_key_msg = "No API key found, running get_api_key script...";
+$expired_msg = "Sorry, looks like the API key expired, please generate a new key and rerun the script when you're done`n Deleting expired key and Exiting now...";
+$welcome_msg = "`n Returning back to the main script...";
+$summoner_msg = "Summoner not specified as cmdline arg, please enter who you're searching up stats for:";
 
 # If dev_key does not exist or has expired (24 hours since last write)
 # prompt user for dev_key and write to file
 if(!(Test-Path dev_key)){
-    Read-Host -AsSecureString -Prompt "API Key" | ConvertFrom-SecureString -AsPlainText > dev_key;
+    Write-Host $no_key_msg;
+    ./get_dev_key.ps1;
+    Write-Host $welcome_msg;
 }
 else{
     $expired = ($(Get-Date) - $((Get-Item .\dev_key).LastWriteTime)).Days;
     if($expired){
-        Read-Host -AsSecureString -Prompt "API Key" | ConvertFrom-SecureString -AsPlainText > dev_key;
+        Write-Host $expired_msg;
+        Remove-Item dev_key;
+        return;
     }
 }
-$api_key = Get-Content dev_key;
+$api_key = Get-Content dev_key | ConvertTo-SecureString | ConvertFrom-SecureString -AsPlainText;
 
 # Try to summoner name from commandline args, otherwise prompt user
 $summoner = $args[0];
