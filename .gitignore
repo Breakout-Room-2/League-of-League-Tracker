@@ -17,3 +17,4 @@ local.properties
 /powershell_testing/matchlist
 /powershell_testing/dev_key
 /powershell_testing/ddragon
+/powershell_testing/login.json
