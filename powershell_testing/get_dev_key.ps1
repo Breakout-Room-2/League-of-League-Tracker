@@ -64,7 +64,7 @@ function parseForKeyV5($dev_page){
 
 # For a clean conversion to DateTime, run through a series of regex replaces
 # to remove text before/after date, the @, and any ordinal number suffixes
-    @('.*Expires: ', '\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
+    @('.*Expire[sd]: ', '\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
         $date = $date -replace $_;
     }
 
@@ -87,7 +87,7 @@ function parseForKeyV7($dev_page){
 # so resorted to regex to parse the response content for expiration date
 # Similar to V5, run through series of regex replacements to clean up for
 # DateTime conversion
-    $date = $dev_page.content | sed -n '/Expires/ {n;n;p}';
+    $date = $dev_page.content | sed -n '/Expire[sd]/ {n;n;p}';
     @('\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
         $date = $date -replace $_;
     }
