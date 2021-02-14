@@ -1,5 +1,15 @@
+# Script-wide definitions for paths, messages, and urls
+$api_host = "https://na1.api.riotgames.com";
+$datadragon = "https://ddragon.leagueoflegends.com";
+$champ_page = "/cdn/11.3.1/data/en_US/champion.json";
+$champions = ".\ddragon\champion.json";
+$no_key_msg = "No API key found, running get_api_key script...";
+$time_left_msg = "API key expired, please generate a new key and rerun the script when you're done`n`tDeleting expired key and Exiting now...";
+$summoner_msg = "Summoner not specified as cmdline arg, please enter who you're searching up stats for:";
+
 #                   Beginning of Helper functions
 # -----------------------------------------------------------------------------
+#
 # Define a generic API call method using Invoke-RestMethod
 #   - api_request: defines the particular API call to make
 #   - request_inp: API call param (e.g. summoner name, match ID, etc.)
@@ -59,10 +69,9 @@ function Get_Masteries($summoner_id){
 
 # Resolves ID found in API responses to champions
 function Get_ChampByID($champID){
-    $champ_page = "/cdn/11.3.1/data/en_US/champion.json";
-    $champions = "ddragon\chapmion.json";
-
-    if(!(Test-Path $champions)){
+    $path = "./ddragon";
+    if(!(Test-Path $path)){
+        New-Item -ItemType Directory $path | Out-Null;
         curl -s "$datadragon$champ_page" > $champions;
     }
     $champions = (Get-Content $champions | ConvertFrom-Json -AsHashtable).data;
@@ -79,30 +88,35 @@ function Get_ChampByID($champID){
 #                        Beginning of 'main' code
 # -----------------------------------------------------------------------------
 
-# Define API host to the north american platform host
-$api_host = "https://na1.api.riotgames.com";
-$no_key_msg = "No API key found, running get_api_key script...";
-$expired_msg = "Sorry, looks like the API key expired, please generate a new key and rerun the script when you're done`n Deleting expired key and Exiting now...";
-$welcome_msg = "`n Returning back to the main script...";
-$summoner_msg = "Summoner not specified as cmdline arg, please enter who you're searching up stats for:";
-$datadragon = "http://ddragon.leagueoflegends.com";
+# Define alias for edge - I could remove-alias afterwards but eh, keep it it's useful
+Set-Alias edge "\Program Files (x86)\Microsoft\Edge\Application\msedge.exe";
 
-# If dev_key does not exist or has expired (24 hours since last write)
-# prompt user for dev_key and write to file
+# Check if key exists, running script to get key if it doesn't
 if(!(Test-Path dev_key)){
     Write-Host $no_key_msg;
     ./get_dev_key.ps1;
-    Write-Host $welcome_msg;
 }
-else{
-    $expired = ($(Get-Date) - $((Get-Item .\dev_key).LastWriteTime)).Days;
-    if($expired){
-        Write-Host $expired_msg;
-        Remove-Item dev_key;
-        return;
-    }
+
+# Get data from dev_key and extract exp date and api key 
+$data = Get-Content dev_key | ConvertFrom-Json;
+$api_key = $data.api_key | ConvertTo-SecureString | ConvertFrom-SecureString -AsPlainText;
+$exp_date= Get-Date $data.exp_date;
+
+# Check if key expired, opening up the dev page for user to generate key
+# and removing expired key
+$time_left = ($exp_date) - (Get-Date);
+if($time_left -le 0){
+    Write-Host $time_left_msg;
+    Remove-Item dev_key;
+    edge "https://developer.riotgames.com/";
+    return;
 }
-$api_key = Get-Content dev_key | ConvertTo-SecureString | ConvertFrom-SecureString -AsPlainText;
+
+# Notify user of time left on key, then continue
+Write-Host -NoNewLine "Key will expire in ";
+Write-Host -NoNewLine -ForegroundColor Yellow "$($time_left.Hours) hours";
+Write-Host -NoNewLine " and ";
+Write-Host -NoNewLine -ForegroundColor Yellow "$($time_left.Minutes) minutes`n";
 
 # Try to summoner name from commandline args, otherwise prompt user
 $summoner = $args[0];
