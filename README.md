@@ -43,4 +43,4 @@
    * User can click on a match for more details (deciding whether to expand details on same screen or navigate to Detail/Match Detail screen tbd)
 
 **Wireframes**
-<img src='https://github.com/Breakout-Room-2/lol-tracker' title='Wireframes' width='' alt='Wireframes' />
+<img src='https://github.com/Breakout-Room-2/lol-tracker/blob/master/wireframes.jpg' title='Wireframes' width='' alt='Wireframes' />
