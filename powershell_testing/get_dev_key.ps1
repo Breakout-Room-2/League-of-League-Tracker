@@ -29,7 +29,7 @@ function getUserCred(){
     if (!(Test-Path $datafile)) {
         Write-Host -ForegroundColor Magenta $notfound_msg;
 
-        $username = Read-Host -Prompt "Username" | ConvertTo-SecureString -AsPlainText;
+        $username = Read-Host -Prompt "Username" | ConvertTo-SecureString -AsPlainText -Force;
         $password = Read-Host -Prompt "Password" -AsSecureString;
 
         (@{Username=$($username | ConvertFrom-SecureString);
@@ -95,7 +95,7 @@ function parseForKeyV7($dev_page){
 # Get rid of extra space after converting to DateTime and 
 # encode api key as a secure string before writing to file
     $date = Get-Date $date | sed -n '2p';
-    $key = ConvertTo-SecureString -AsPlainText $key | ConvertFrom-SecureString;
+    $key = ConvertTo-SecureString -AsPlainText -Force $key | ConvertFrom-SecureString;
 
     @{api_key=$key; exp_date=$date} | ConvertTo-Json > dev_key;
 }
@@ -115,12 +115,12 @@ do{
             password=$data.password; }) | ConvertTo-Json;
 
 # Get the login page taking all redirections and create a session variable
-    $login_page = Invoke-WebRequest -Uri $login_url -SessionVariable session;
+    $login_page = Invoke-WebRequest -Uri $login_url -SessionVariable session -UseBasicParsing;
 
 # Inspect element reveals the login process involves submitting a PUT request
 # with the payload (specifying content as application/json form) which is odd
     $oath_page = Invoke-WebRequest -Uri $auth_url -WebSession $session `
-        -Method PUT -Body $payload -ContentType 'application/json';
+        -Method PUT -Body $payload -ContentType 'application/json' -UseBasicParsing;
     $oath_resp = $oath_page.Content | ConvertFrom-Json;
 
 # Repeat process until user succesfully logs in or interrupts script
@@ -139,12 +139,13 @@ Remove-Item $datafile;
 # Dev url can be parsed from the contents of the auth response if successful
 # You can then get to the dev page w/ the cookies set in session variable
 $dev_url = $oath_resp.response.parameters.uri;
-$dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session; 
+$dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session -UseBasicParsing; 
 
 # Depending on version of powershell, run the appropriate version of helper
 # and notify user of writing to file
 if((Get-Host).Version.Major -eq 5){
-    parseForKeyV5($dev_page);
+# Turns out the -UseBasicParsing makes Invoke-WebRequest behave the same as V7...
+    parseForKeyV7($dev_page);      
 } else {
     parseForKeyV7($dev_page);
 }
