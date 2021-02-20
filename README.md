@@ -50,38 +50,50 @@
 ### Models
 
 #### Summoner
-    | accountID | String    | Encrypted account ID
-    | name      | Sring     | Summoner name
-    | id        | String    | Encrypted summoner ID
+     Name      | Type      | Description
+     ----------|-----------|------------
+     accountID | String    | Encrypted account ID
+     name      | Sring     | Summoner name
+     id        | String    | Encrypted summoner ID
 
 #### Champion
-    | championID    | int   | Champion ID
-    | championLevel | int   | Mastery Level for a champion
-    | championPoints| int   | Mastery Points for a champion
+     Name          | Type  | Description
+     --------------|-------|------------
+     championID    | int   | Champion ID
+     championLevel | int   | Mastery Level for a champion
+     championPoints| int   | Mastery Points for a champion
 
 #### Matchlist
-    | matches   | List [MatchReferenceDTO]  | List of match references
+     Name      | Type                      | Description
+     ----------|---------------------------|------------
+     matches   | List [MatchReferenceDTO]  | List of match references
 
 #### MatchReferenceDTO
-    | gameID    | long      | game ID unique to match
-    | role      | String    | role of user in match 
-    | champion  | int       | (same as championID)
-    | queue     | int       | type of queue (e.g. ranked, draft)
-    | timestamp | long      | Date of match (in UnixEpochMilliseconds)
+     Name      | Type      | Description
+     ----------|-----------|------------
+     gameID    | long      | game ID unique to match
+     role      | String    | role of user in match 
+     champion  | int       | (same as championID)
+     queue     | int       | type of queue (e.g. ranked, draft)
+     timestamp | long      | Date of match (in UnixEpochMilliseconds)
 
 #### Match
-    | queueId       | int                   | type of queue and map
-    | gameCreation  | long                  | (same as timestamp)
-    | gameDuration  | long                  | match duration in seconds
-    | participants  | list[particpantDTO]   | list of match participants
+     Name          | Type                  | Description
+     --------------|-----------------------|------------
+     queueId       | int                   | type of queue and map
+     gameCreation  | long                  | (same as timestamp)
+     gameDuration  | long                  | match duration in seconds
+     participants  | list[particpantDTO]   | list of match participants
 
 #### participantDTO
-    | particpantID  | int                   | participant ID
-    | championID    | int                   | (same as championID)
-    | teamId        | int                   | 100 for blue, 200 for red side
-    | spell1Id      | int                   | first summoner spell ID
-    | spell2Id      | int                   | second summoner spell ID
-    | stats         | participantStatsDTO   | 
+     Name          | Type                  | Description
+     --------------|-----------------------|------------
+     particpantID  | int                   | participant ID
+     championID    | int                   | (same as championID)
+     teamId        | int                   | 100 for blue, 200 for red side
+     spell1Id      | int                   | first summoner spell ID
+     spell2Id      | int                   | second summoner spell ID
+     stats         | participantStatsDTO   | 
 
 #### participantStatsDTO
 A bit of long model, contains stats relavant to each summoner in game such as
@@ -89,4 +101,21 @@ KDA, cs, damage dealt, vision score, runes, etc.
 
 ### Networking
 
+#### List of network requests by screen
+    - Home/Search Screen
+        - GET: request summoner info by name after user inputs name
+    - Feed Screen
+        - GET: request champion mastery info to list top 3 (if not already cached) 
+        - GET: request match list info
+        - GET: subsequent requests for match details on first 5 matches (for matches not already cached)
+
 ### Existing API Endpoints
+
+Base Url: [https://na1.api.riotgames.com](https://na1.api.riotgames.com)
+
+    HTTP Verb   | Endpoint  | Description
+    ------------|-----------|------------
+    'GET'       | /lol/summoner/v4/summoners/by-name/{summonerName} | Returns summoner IDs. Needed for other calls
+    'GET'       | /lol/match/v4/matchlists/by-account/{encryptedAccountID} | Returns brief summary of 100 matches
+    'GET'       | /lol/match/v4/matches/{matchID}   | Returns details of a particular match
+    'GET'       | /lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerID} | Return champion mastery data
