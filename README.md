@@ -50,11 +50,11 @@
 ### Models
 
 #### Summoner
-     Name      | Type      | Description
-     --------- | --------- | -----------
-     accountID | String    | Encrypted account ID
-     name      | Sring     | Summoner name
-     id        | String    | Encrypted summoner ID
+Name      | Type      | Description
+--------- | --------- | -----------
+accountID | String    | Encrypted account ID
+name      | Sring     | Summoner name
+id        | String    | Encrypted summoner ID
 
 #### Champion
      Name          | Type  | Description
