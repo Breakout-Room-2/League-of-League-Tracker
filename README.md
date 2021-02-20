@@ -51,26 +51,26 @@
 
 #### Summoner
 Name      | Type      | Description
---------- | --------- | -----------
+--------- | :-------: | -----------
 accountID | String    | Encrypted account ID
 name      | Sring     | Summoner name
 id        | String    | Encrypted summoner ID
 
 #### Champion
 Name          | Type  | Description
-------------- | ----- | -----------
+------------- | :---: | -----------
 championID    | int   | Champion ID
 championLevel | int   | Mastery Level for a champion
 championPoints| int   | Mastery Points for a champion
 
 #### Matchlist
 Name      | Type                      | Description
---------- | ------------------------- | -----------
+--------- | :-----------------------: | -----------
 matches   | List [MatchReferenceDTO]  | List of match references
 
 #### MatchReferenceDTO
 Name      | Type      | Description
---------- | --------- | -----------
+--------- | :-------: | -----------
 gameID    | long      | game ID unique to match
 role      | String    | role of user in match 
 champion  | int       | (same as championID)
@@ -79,7 +79,7 @@ timestamp | long      | Date of match (in UnixEpochMilliseconds)
 
 #### Match
 Name          | Type                  | Description
-------------- | --------------------- | -----------
+------------- | :-------------------: | -----------
 queueId       | int                   | type of queue and map
 gameCreation  | long                  | (same as timestamp)
 gameDuration  | long                  | match duration in seconds
@@ -87,7 +87,7 @@ participants  | list[particpantDTO]   | list of match participants
 
 #### participantDTO
 Name          | Type                  | Description
-------------- | --------------------- | -----------
+------------- | :-------------------: | -----------
 particpantID  | int                   | participant ID
 championID    | int                   | (same as championID)
 teamId        | int                   | 100 for blue, 200 for red side
@@ -96,8 +96,24 @@ spell2Id      | int                   | second summoner spell ID
 stats         | participantStatsDTO   | 
 
 #### participantStatsDTO
-A bit of long model, contains stats relavant to each summoner in game such as
-KDA, cs, damage dealt, vision score, runes, etc.
+Name                | Type                  | Description
+-------------       | :-------------------: | -----------
+item[0-6]           | int                   | itemID (resolved to item name/icon with db)
+champLevel          | int                   | champion level
+kills               | int                   | champion kills
+deaths              | int                   | champion deaths
+assists             | int                   | champion assists
+totalDamageDealt    | long                  | total damage dealt
+totalMinionsKilled  | int                   | CS score
+visionScore         | int                   | vision score (calculated by riot)
+visionWards         | int                   | control wards bought
+wardsPlaced         | int                   | total wards placed
+wardsKilled         | int                   | total wards killed
+goldEarned          | int                   | gold earned
+perk[0-5]           | int                   | runes used by ID (0-3 primary, 4-5 secondary)
+perkPrimaryStyle    | int                   | rune path for primary rune
+perkSubStyle        | int                   | rune path for secondary rune
+statPerk[0-2]       | int                   | rune shards chosen (offense, flex, defense)
 
 ### Networking
 
