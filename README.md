@@ -102,12 +102,12 @@ KDA, cs, damage dealt, vision score, runes, etc.
 ### Networking
 
 #### List of network requests by screen
-    - Home/Search Screen
-        - GET: request summoner info by name after user inputs name
-    - Feed Screen
-        - GET: request champion mastery info to list top 3 (if not already cached) 
-        - GET: request match list info
-        - GET: subsequent requests for match details on first 5 matches (for matches not already cached)
+- Home/Search Screen
+  - GET: request summoner info by name after user inputs name
+- Feed Screen
+  - GET: request champion mastery info to list top 3 (if not already cached) 
+  - GET: request match list info
+  - GET: subsequent requests for match details on first 5 matches (for matches not already cached)
 
 ### Existing API Endpoints
 Base Url: [https://na1.api.riotgames.com](https://na1.api.riotgames.com)
