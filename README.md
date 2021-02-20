@@ -51,26 +51,26 @@
 
 #### Summoner
      Name      | Type      | Description
-     ----------|-----------|------------
+     --------- | --------- | -----------
      accountID | String    | Encrypted account ID
      name      | Sring     | Summoner name
      id        | String    | Encrypted summoner ID
 
 #### Champion
      Name          | Type  | Description
-     --------------|-------|------------
+     ------------- | ----- | -----------
      championID    | int   | Champion ID
      championLevel | int   | Mastery Level for a champion
      championPoints| int   | Mastery Points for a champion
 
 #### Matchlist
      Name      | Type                      | Description
-     ----------|---------------------------|------------
+     --------- | ------------------------- | -----------
      matches   | List [MatchReferenceDTO]  | List of match references
 
 #### MatchReferenceDTO
      Name      | Type      | Description
-     ----------|-----------|------------
+     --------- | --------- | -----------
      gameID    | long      | game ID unique to match
      role      | String    | role of user in match 
      champion  | int       | (same as championID)
@@ -79,7 +79,7 @@
 
 #### Match
      Name          | Type                  | Description
-     --------------|-----------------------|------------
+     ------------- | --------------------- | -----------
      queueId       | int                   | type of queue and map
      gameCreation  | long                  | (same as timestamp)
      gameDuration  | long                  | match duration in seconds
@@ -87,7 +87,7 @@
 
 #### participantDTO
      Name          | Type                  | Description
-     --------------|-----------------------|------------
+     ------------- | --------------------- | -----------
      particpantID  | int                   | participant ID
      championID    | int                   | (same as championID)
      teamId        | int                   | 100 for blue, 200 for red side
@@ -114,7 +114,7 @@ KDA, cs, damage dealt, vision score, runes, etc.
 Base Url: [https://na1.api.riotgames.com](https://na1.api.riotgames.com)
 
     HTTP Verb   | Endpoint  | Description
-    ------------|-----------|------------
+    ----------- | --------- | -----------
     'GET'       | /lol/summoner/v4/summoners/by-name/{summonerName} | Returns summoner IDs. Needed for other calls
     'GET'       | /lol/match/v4/matchlists/by-account/{encryptedAccountID} | Returns brief summary of 100 matches
     'GET'       | /lol/match/v4/matches/{matchID}   | Returns details of a particular match
