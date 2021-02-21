@@ -17,3 +17,4 @@ local.properties
 /powershell_testing/dev_key
 /powershell_testing/login.json
 /powershell_testing/champions.json
+/powershell_testing/queues.json
