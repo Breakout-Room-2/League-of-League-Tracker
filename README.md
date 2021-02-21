@@ -42,5 +42,94 @@
    * User can scroll up and down a list of recent match summaries
    * User can click on a match for more details (deciding whether to expand details on same screen or navigate to Detail/Match Detail screen tbd)
 
-## Wireframes
+## 4. Wireframes
 <img src='https://github.com/Breakout-Room-2/lol-tracker/blob/master/wireframes.jpg' title='Wireframes' width='' alt='Wireframes' />
+
+## 5. Schema
+
+### Models
+
+#### Summoner
+Name      | Type      | Description
+--------- | :-------: | -----------
+accountID | String    | Encrypted account ID
+name      | Sring     | Summoner name
+id        | String    | Encrypted summoner ID
+
+#### Champion
+Name          | Type  | Description
+------------- | :---: | -----------
+championID    | int   | Champion ID
+championLevel | int   | Mastery Level for a champion
+championPoints| int   | Mastery Points for a champion
+
+#### Matchlist
+Name      | Type                      | Description
+--------- | :-----------------------: | -----------
+matches   | List [MatchReferenceDTO]  | List of match references
+
+#### MatchReferenceDTO
+Name      | Type      | Description
+--------- | :-------: | -----------
+gameID    | long      | game ID unique to match
+role      | String    | role of user in match 
+champion  | int       | (same as championID)
+queue     | int       | type of queue (e.g. ranked, draft)
+timestamp | long      | Date of match (in UnixEpochMilliseconds)
+
+#### Match
+Name          | Type                  | Description
+------------- | :-------------------: | -----------
+queueId       | int                   | type of queue and map
+gameCreation  | long                  | (same as timestamp)
+gameDuration  | long                  | match duration in seconds
+participants  | list[particpantDTO]   | list of match participants
+
+#### participantDTO
+Name          | Type                  | Description
+------------- | :-------------------: | -----------
+particpantID  | int                   | participant ID
+championID    | int                   | (same as championID)
+teamId        | int                   | 100 for blue, 200 for red side
+spell1Id      | int                   | first summoner spell ID
+spell2Id      | int                   | second summoner spell ID
+stats         | participantStatsDTO   | 
+
+#### participantStatsDTO
+Name                | Type                  | Description
+-------------       | :-------------------: | -----------
+item[0-6]           | int                   | itemID (resolved to item name/icon with db)
+champLevel          | int                   | champion level
+kills               | int                   | champion kills
+deaths              | int                   | champion deaths
+assists             | int                   | champion assists
+totalDamageDealt    | long                  | total damage dealt
+totalMinionsKilled  | int                   | CS score
+visionScore         | int                   | vision score (calculated by riot)
+visionWards         | int                   | control wards bought
+wardsPlaced         | int                   | total wards placed
+wardsKilled         | int                   | total wards killed
+goldEarned          | int                   | gold earned
+perk[0-5]           | int                   | runes used by ID (0-3 primary, 4-5 secondary)
+perkPrimaryStyle    | int                   | rune path for primary rune
+perkSubStyle        | int                   | rune path for secondary rune
+statPerk[0-2]       | int                   | rune shards chosen (offense, flex, defense)
+
+### Networking
+
+#### List of network requests by screen
+- Home/Search Screen
+  - GET: request summoner info by name after user inputs name
+- Feed Screen
+  - GET: request champion mastery info to list top 3 (if not already cached) 
+  - GET: request match list info
+  - GET: subsequent requests for match details on first 5 matches (for matches not already cached)
+
+### Existing API Endpoints
+Base Url: [https://na1.api.riotgames.com](https://na1.api.riotgames.com)
+HTTP Verb   | Endpoint  | Description
+----------- | --------- | -----------
+'GET'       | /lol/summoner/v4/summoners/by-name/{summonerName} | Returns summoner IDs. Needed for other calls
+'GET'       | /lol/match/v4/matchlists/by-account/{encryptedAccountID} | Returns brief summary of 100 matches
+'GET'       | /lol/match/v4/matches/{matchID}   | Returns details of a particular match
+'GET'       | /lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerID} | Return champion mastery data
