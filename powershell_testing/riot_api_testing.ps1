@@ -1,8 +1,11 @@
 # Script-wide definitions for paths, messages, and urls
 $api_host   = "https://na1.api.riotgames.com";
 $datadragon = "https://ddragon.leagueoflegends.com";
+$staticdb   = "static.developer.riotgames.com";
 $champ_page = "/cdn/11.3.1/data/en_US/champion.json";
+$queues_page= "/docs/lol/queues.json";
 $champ_cache = "champions.json";
+$queue_hash  = "queues.json";
 $no_key_msg     = "No API key found, running get_api_key script...";
 $time_left_msg  = "API key expired, please generate a new key and rerun the script when you're done`n`tDeleting expired key and Exiting now...";
 $summoner_msg   = "Summoner not specified as cmdline arg, please enter who you're searching up stats for:";
@@ -77,42 +80,66 @@ function Get_Masteries($summoner_id){
     return Make_Web_Request $api_request $summoner_id | ConvertFrom-Json;
 }
 
-# Helper function to create/retreive a hastable to resolve champ ID to data
+# Helper function to create/retreive a hashtable to resolve champ ID to data
 function Get_ChampData(){
 
-# If already hastable already cached to a file, just read from that file
+# If already cached to a file, just read from that file
     if(Test-Path $champ_cache){
-        $champions = Get-Content $champ_cache | ConvertFrom-Json;
+        return Get-Content $champ_cache | ConvertFrom-Json;
     } 
 
 # Otherwise will have to process the raw data from datadragon and reduce down
 # to a more concise hashtable with only needed details and more favourable
 # organization
-    else {
-        $raw_data = (Invoke-RestMethod "$datadragon$champ_page").data;
+    $raw_data = (Invoke-RestMethod "$datadragon$champ_page").data;
 
 # Empty hashtable to add to when processing raw data 
-        $champions = @{};
-        
+    $champions = @{};
+
 # raw data accesses champ data by name (NoteProperties)
-        Get-Member -InputObject $raw_data -MemberType NoteProperty | foreach{
+    Get-Member -InputObject $raw_data -MemberType NoteProperty | foreach{
 # More favourable organization will use champID (key) as key instead and
 # only store champ name and image data 
-            $champ = $_.Name;
-            $champions.add($raw_data.$champ.key, @{
-                    Name=$champ;
-                    Image=@{full    = $raw_data.$champ.image.full;
-                            sprite  = $raw_data.$champ.image.sprite;
-                            group   = $raw_data.$champ.image.group}
-                    });
-        };
+        $champ = $_.Name;
+        $champions.add($raw_data.$champ.key, @{
+                Name=$champ;
+                Image=@{full    = $raw_data.$champ.image.full;
+                sprite  = $raw_data.$champ.image.sprite;
+                group   = $raw_data.$champ.image.group}
+                });
+    };
 
 # Remember to write to file to avoid doing this work next time
-        $champions | ConvertTo-Json > $champ_cache;
+    $champions | ConvertTo-Json > $champ_cache;
+
+    return $champions;
+}
+
+# Helper function to create/retrieve a hashtable to resolve queue ID to data
+# Very similar to above function for champdata
+function Get_QueueData(){
+
+# If already cached to a file, just read from that file
+    if(Test-Path $queue_hash){
+        return Get-Content $queue_hash | ConvertFrom-Json;
     }
 
-# Also remember to return the hashtable 
-    return $champions;
+# Otherwise will have to process the raw data from riot's static db and reduce
+
+# Empty hashtable to add to when processing raw data
+    $queues = @{};
+
+    (Invoke-RestMethod "$staticdb$queues_page") | % {
+        $queues.add(([String] $_.queueid), @{
+                map     = $_.map;
+                description = $_.description;
+                notes   = $_notes});
+    }
+
+# Remember to write to file to avoid doing this work next time
+    $queues | ConvertTo-Json > $queue_hash;
+
+    return $queues;
 }
 
 # Helper function to resolve ID found in API responses to champion data
