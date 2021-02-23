@@ -55,6 +55,7 @@ Name      | Type      | Description
 accountID | String    | Encrypted account ID
 name      | Sring     | Summoner name
 id        | String    | Encrypted summoner ID
+    - Note: encrypted values are encrypted using api key, thus are unique per api key
 
 #### Champion
 Name          | Type  | Description
@@ -63,12 +64,32 @@ championID    | int   | Champion ID
 championLevel | int   | Mastery Level for a champion
 championPoints| int   | Mastery Points for a champion
 
+#### League
+ Name           | Type          | Description
+ -------------- | :-----------: | -----------
+ queueType      | String        | SoloQueue, Flex
+ tier           | String        | Iron, Bronze, Silver, Gold, etc.
+ rank           | String        | rank I, II, III, IV within tier
+ leaguePoints   | int           | lp progression towards next rank/tier
+ wins           | int           | total ranked wins
+ losses         | int           | total ranked losses
+ hotStreak      | boolean       | 3+ wins in a row
+ miniSeries     | MiniSeries    | series if summoner is in promos
+
+#### MiniSeries
+ Name       | Type      | Description
+ ---------- | :-------: | -----------
+ losses     | int       | number of losses
+ progress   | int       | W,L,N representation of series
+ target     | int       | required wins to promote
+ win        | String    | number of wins
+ 
 #### Matchlist
 Name      | Type                      | Description
 --------- | :-----------------------: | -----------
-matches   | List [MatchReferenceDTO]  | List of match references
+matches   | List [MatchReference]     | List of match references
 
-#### MatchReferenceDTO
+#### MatchReference
 Name      | Type      | Description
 --------- | :-------: | -----------
 gameID    | long      | game ID unique to match
@@ -83,9 +104,9 @@ Name          | Type                  | Description
 queueId       | int                   | type of queue and map
 gameCreation  | long                  | (same as timestamp)
 gameDuration  | long                  | match duration in seconds
-participants  | list[particpantDTO]   | list of match participants
+participants  | list[particpant]      | list of match participants
 
-#### participantDTO
+#### participant
 Name          | Type                  | Description
 ------------- | :-------------------: | -----------
 particpantID  | int                   | participant ID
@@ -93,9 +114,9 @@ championID    | int                   | (same as championID)
 teamId        | int                   | 100 for blue, 200 for red side
 spell1Id      | int                   | first summoner spell ID
 spell2Id      | int                   | second summoner spell ID
-stats         | participantStatsDTO   | 
+stats         | participantStats      | 
 
-#### participantStatsDTO
+#### participantStats
 Name                | Type                  | Description
 -------------       | :-------------------: | -----------
 item[0-6]           | int                   | itemID (resolved to item name/icon with db)
@@ -122,6 +143,7 @@ statPerk[0-2]       | int                   | rune shards chosen (offense, flex,
   - GET: request summoner info by name after user inputs name
 - Feed Screen
   - GET: request champion mastery info to list top 3 (if not already cached) 
+  - GET: request league info to display ranking(s)
   - GET: request match list info
   - GET: subsequent requests for match details on first 5 matches (for matches not already cached)
 
@@ -133,3 +155,4 @@ HTTP Verb   | Endpoint  | Description
 'GET'       | /lol/match/v4/matchlists/by-account/{encryptedAccountID} | Returns brief summary of 100 matches
 'GET'       | /lol/match/v4/matches/{matchID}   | Returns details of a particular match
 'GET'       | /lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerID} | Return champion mastery data
+'GET'       | /lol/league/v4/entries/by-summoner/{encryptedAccountID}   | Returns JSONList of league info (ranking)
