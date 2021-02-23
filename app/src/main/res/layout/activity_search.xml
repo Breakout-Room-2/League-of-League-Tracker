@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/ivIcLOL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvTitle"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        tools:src="@tools:sample/avatars"
+        />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/etSummonerSearch"
+        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true"
+        android:text="Summoners"
+        android:textSize="20sp"
+        />
+
+
+    <EditText
+        android:id="@+id/etSummonerSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/search_background"
+        android:padding="10dp"
+        android:paddingEnd="80dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:hint="Enter Summoner Name..."
+        />
+
+    <ImageView
+        android:id="@+id/ivSearchButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@id/etSummonerSearch"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_search"
+        />
+
+    <TextView
+        android:id="@+id/tvRecentSearches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etSummonerSearch"
+        android:layout_marginTop="20dp"
+        tools:text="Recent searches:"
+        />
+</RelativeLayout>
