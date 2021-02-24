@@ -1,6 +1,8 @@
 # Script-wide definitions for datafile location, messages, and urls
 $newfile        = 1;
 $datafile       = "powershell_testing\login.json";
+$expiration_notice    = "Key expires in {0} hours and {1} minutes!";
+$key_exists_msg = "apikey.properties already exists...";
 $found_msg      = "`nLogin info found, just sit back and let the script do it's thing";
 $notfound_msg   = "`nNo login file, you're gonna have to input some values yourself:";
 $saving_msg     = "`nLogin successful, writing login info to 'login.json' file...";
@@ -15,6 +17,24 @@ $auth_url       = "auth.riotgames.com/api/v1/authorization";
 # Helper function found online that will transform securestring --> plaintext
 function decryptSecureString($SecureString){
     return [System.Runtime.InteropServices.Marshal]::PtrToStringUni([System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($SecureString));
+}
+
+
+# Helper function to check time left on current api key 
+# notifying user of time left and directing user to riot's dev site
+# if key expired, waitin on user to refresh to continue
+function getTimeLeft($date){
+    $time_left = ($date) - (Get-Date);
+
+    if ($time_left -gt 0) {
+        Write-Host ($expiration_notice -f $time_left.Hours, $time_left.Minutes);
+    } else {
+        Write-Host "Key expired";
+        edge "https://developer.riotgames.com/";
+        Read-Host "Press enter once you've regenrated the API key";
+    }
+
+    return $time_left.totalMilliseconds;
 }
 
 # Helper function to gather user credentials. Will try to use and store
@@ -64,13 +84,13 @@ function writeApiKey($dev_page){
 # so resorted to regex to parse the response content for expiration date
 # A series of regex replacements removes extra characters and ordinalls for 
 # a smoother conversion to DateTime
-    $date = $dev_page.content | sed -n '/Expire[sd]/ {n;n;p}';
+    $date = ((($dev_page.content -split "Expir")[1] -split "</b>")[0] -split "`n")[2];
     @('\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
         $date = $date -replace $_;
     }
 
-# Get rid of extra space after converting to DateTime and 
-    $date = Get-Date $date | sed -n '2p';
+# Convert to DateTime and write key/date combo to apikey.properties
+    $date = (Get-Date $date).toString();
 
     Write-Output "API_KEY = `"$key`"`nEXP_DATE = `"$date`"" > apikey.properties;
 }
@@ -83,16 +103,11 @@ function writeApiKey($dev_page){
 # Check if apikey.properties file already exists, and making sure key hasn't
 # expired - skipping the main body of code if the key is fine
 if (Test-Path apikey.properties){
-    $date = Get-Date ((sed -n "/EXP_DATE/p" apikey.properties) -replace '"' -replace "EXP_DATE = ");
-    $time_left = ($date) - (Get-Date);
-
-    if ($time_left -gt 0) {
+    Write-Host $key_exists_msg;
+    $date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+    if ($(getTimeLeft($date)) -gt 0) {
         return;
     }
-
-    Write-Host "Key expired";
-    edge "https://developer.riotgames.com/";
-    Read-Host "Press enter once you've regenrated the API key";
 }
 
 do{
@@ -133,6 +148,15 @@ $dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session -UseBasicParsin
 
 # Finally write the api key and expiration date to apikey.properties file
 writeApiKey($dev_page);      
-
 Write-Host -ForegroundColor Green $writing_msg
+$date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+
+# Check that key hasn't expired, prompting user to regen if needed
+# continue by rewriting apikey.properties file 
+while ($(getTimeLeft($date)) -le 0){
+    $dev_page = Invoke-WebRequest -Uri $login_url -WebSession $session -UseBasicParsing;
+    writeApiKey($dev_page);
+
+    $date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+}
 # ----------------------------------------------------------------------------
