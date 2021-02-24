@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">League of Legends Tracker</string>
+    <string name="title">Summoners</string>
+    <string name="summoner_search_hint">Enter Summoner Name…</string>
+    <string name="search_icon">Magnifying glass search icon</string>
+    <string name="title_icon">title icon to fill up blank space</string>
 </resources>

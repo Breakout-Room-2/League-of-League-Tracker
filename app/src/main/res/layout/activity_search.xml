@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,13 +8,14 @@
 
     <ImageView
         android:id="@+id/ivIcLOL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_above="@id/tvTitle"
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
-        tools:src="@tools:sample/avatars"
-        />
+        android:src="@drawable/ic_lol"
+        android:scaleType="fitEnd"
+        android:contentDescription="@string/title_icon" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -24,9 +24,8 @@
         android:layout_above="@id/etSummonerSearch"
         android:layout_marginBottom="40dp"
         android:layout_centerHorizontal="true"
-        android:text="Summoners"
-        android:textSize="20sp"
-        />
+        android:text="@string/title"
+        android:textSize="20sp" />
 
 
     <EditText
@@ -41,8 +40,9 @@
         android:paddingEnd="80dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:hint="Enter Summoner Name..."
-        />
+        android:hint="@string/summoner_search_hint"
+        android:autofillHints="@string/summoner_search_hint"
+        tools:ignore="RtlSymmetry" />
 
     <ImageView
         android:id="@+id/ivSearchButton"
@@ -52,7 +52,7 @@
         android:layout_alignEnd="@id/etSummonerSearch"
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_search"
-        />
+        android:contentDescription="@string/search_icon" />
 
     <TextView
         android:id="@+id/tvRecentSearches"
@@ -61,6 +61,5 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/etSummonerSearch"
         android:layout_marginTop="20dp"
-        tools:text="Recent searches:"
-        />
+        tools:text="Recent searches:" />
 </RelativeLayout>
