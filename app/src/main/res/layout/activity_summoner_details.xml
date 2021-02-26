@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="55dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/ivSummonerIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvSummonerName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="175dp"
+        android:layout_weight="1"
+        android:text="Summoner"
+        android:textSize="35dp" />
+
+    <TextView
+        android:id="@+id/tvRank"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSummonerName"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="175dp"
+        android:layout_weight="1"
+        android:text="Rank"
+
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tvLevel"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_marginStart="60dp"
+
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:text="level"
+        android:textSize="20dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="175dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginRight="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <EditText
+            android:id="@+id/etSummonerSearch"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_centerInParent="true"
+            android:autofillHints="@string/summoner_search_hint"
+            android:background="@drawable/light_grey_background"
+            android:hint="@string/summoner_search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="10dp"
+            android:paddingEnd="80dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            tools:ignore="RtlSymmetry" />
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
