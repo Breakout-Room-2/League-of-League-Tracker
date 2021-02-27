@@ -1,5 +1,9 @@
 # League-of-League-Tracker
 
+## DEMO
+
+<img src='demo.gif' title='Demo video' width='' alt='Demo video' />
+
 ## 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
