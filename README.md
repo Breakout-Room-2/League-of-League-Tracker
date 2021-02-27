@@ -4,15 +4,15 @@
 
 **Required Must-have Stories**
 
- * User can search stats by summoner name
- * User can view recent match history 
- * User can see current ranking,graph of win/loss ratio, and average KDA
- * User can click/tap on a match for more info
+ * [ ] User can search stats by summoner name
+ * [ ] User can view recent match history 
+ * [ ] User can see current ranking,graph of win/loss ratio, and average KDA
+ * [ ] User can click/tap on a match for more info
 
 **Optional Nice-to-have Stories**
 
- * Infinite pagination for match history - recent 10 can be continually expanded to more matches
- * Favorites/Recent searches listed on screen for convenience
+ * [ ] Infinite pagination for match history - recent 10 can be continually expanded to more matches
+ * [ ] Favorites/Recent searches listed on screen for convenience
 
 ## 2. Screen Archetypes
 
