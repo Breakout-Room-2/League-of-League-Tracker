@@ -8,7 +8,7 @@
 
 **Required Must-have Stories**
 
- * [ ] User can search stats by summoner name
+ * [x] User can search stats by summoner name
  * [ ] User can view recent match history 
  * [ ] User can see current ranking,graph of win/loss ratio, and average KDA
  * [ ] User can click/tap on a match for more info
