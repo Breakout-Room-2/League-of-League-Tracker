@@ -57,7 +57,7 @@ name      | Sring     | Summoner name
 id        | String    | Encrypted summoner ID
     - Note: encrypted values are encrypted using api key, thus are unique per api key
 
-#### Masteries
+#### Mastery
 Name          | Type  | Description
 ------------- | :---: | -----------
 championID    | int   | Champion ID
