@@ -31,17 +31,6 @@
             tools:ignore="RtlSymmetry" />
     </androidx.cardview.widget.CardView>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivMatchChamp"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginStart="0dp"-->
-<!--        android:layout_marginTop="0dp"-->
-<!--        android:foreground="@drawable/round.xml"-->
-<!--        tools:srcCompat="@tools:sample/avatars"-->
-<!--         />-->
 
     <TextView
         android:id="@+id/tvChampName"
@@ -119,37 +108,71 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/cvChamp"
         android:layout_marginStart="185dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white">
 
         <TableRow>
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
+            <ImageView
+                android:id="@+id/ivItem1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/ivItem2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/ivItem3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
 
+            <ImageView
+                android:id="@+id/ivItem4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
         </TableRow>
 
         <TableRow>
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
-            <TextView
-                android:text="x"
-                android:padding="3dip" />
+            <ImageView
+                android:id="@+id/ivItem5"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/ivItem6"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/ivItem7"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageView
+                android:id="@+id/ivItem8"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:scaleType="centerCrop"
+                tools:ignore="RtlSymmetry" />
 
         </TableRow>
 
