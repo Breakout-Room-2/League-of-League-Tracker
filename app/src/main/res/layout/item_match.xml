@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/cvChamp"
         tools:text="K/D/A" />
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvKDA"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/cvChamp"
         tools:text="Level 18" />
@@ -109,14 +109,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLevel"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/cvChamp"
         tools:text="300 CS" />
 
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/cvChamp"
+        android:layout_marginStart="185dp"
+        android:background="@color/white">
+
+        <TableRow>
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+            <TextView
+                android:text="x"
+                android:padding="3dip" />
+
+        </TableRow>
+
+    </TableLayout>
 
 
-<!--    <TextView-->
+    <!--    <TextView-->
 <!--        android:id="@+id/tvTime"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->
