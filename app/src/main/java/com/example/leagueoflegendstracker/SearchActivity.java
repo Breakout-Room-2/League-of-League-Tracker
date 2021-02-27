@@ -14,13 +14,16 @@ import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.leagueoflegendstracker.models.League;
+import com.example.leagueoflegendstracker.models.Mastery;
+import com.example.leagueoflegendstracker.models.MatchSummary;
 import com.example.leagueoflegendstracker.models.Summoner;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -41,6 +44,9 @@ public class SearchActivity extends AppCompatActivity {
     EditText etSummonerSearch;
     ImageView ivSearchButton;
     Summoner summoner;
+    ArrayList<Mastery> top_masteries;
+    ArrayList<League> leagues;
+    ArrayList<MatchSummary> matchList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +99,7 @@ public class SearchActivity extends AppCompatActivity {
                     Log.i(TAG, "Successfully created summoner model w/ ref: "+summoner.toString());
                     getStats(client, params);
                 } catch (JSONException e) {
-                    Log.e(TAG, "Hit jsonException: "+e);
+                    Log.e(TAG, "Hit JsonException: "+e);
                 }
             }
 
@@ -122,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getMatchList(AsyncHttpClient client, RequestParams params) {
         Log.i(TAG, "Getting summoner matchlist for: " + summoner.getSummonerName());
-        tryApiCall(MATCH_LIST_ENDPOINT, summoner.getAccountId(), client, params);
+        tryApiCall(MATCH_LIST_ENDPOINT, summoner.getEncryptedAccountId(), client, params);
     }
 
     private void tryApiCall(String endpoint, String data, AsyncHttpClient client, RequestParams params){
@@ -132,7 +138,11 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "Success, with data: " + json);
-                createModel(endpoint, json);
+                try {
+                    createModel(endpoint, json);
+                } catch (JSONException e) {
+                    Log.i(TAG, "Hit JsonException " + e);
+                }
             }
 
             @Override
@@ -142,16 +152,19 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void createModel(String endpoint, JsonHttpResponseHandler.JSON json) {
+    private void createModel(String endpoint, JsonHttpResponseHandler.JSON json) throws JSONException {
         switch (endpoint){
             case MASTERIES_ENDPOINT:
-                Log.i(TAG, "Created masteries model: ");
+                top_masteries = Mastery.fromJSONArray(json.jsonArray);
+                Log.i(TAG, "Created list of top masteries model w/ refs: " + top_masteries);
                 break;
             case LEAGUE_ENDPOINT:
-                Log.i(TAG, "Created league (ranking) model: ");
+                leagues = League.fromJsonArray(json.jsonArray);
+                Log.i(TAG, "Created list of league (ranking) models w/ ref: " + leagues);
                 break;
             case MATCH_LIST_ENDPOINT:
-                Log.i(TAG, "Created matchlist model: ");
+                matchList = MatchSummary.fromJsonArray(json.jsonObject.getJSONArray("matches"));
+                Log.i(TAG, "Created list of match summary models w/ ref: " + matchList);
                 break;
         }
 
