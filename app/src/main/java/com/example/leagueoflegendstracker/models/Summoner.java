@@ -6,37 +6,37 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Summoner {
-    String summonerName;
-    String encryptedSummonerId;
-    String accountId;
-    int profileIconId;
-    int summonerLevel;
+    String name;
+    String summonerID;
+    String accountID;
+    int iconID;
+    int level;
 
     public Summoner(JSONObject jsonObject) throws JSONException {
-        summonerName = jsonObject.getString("name");
-        encryptedSummonerId = jsonObject.getString("id");
-        accountId = jsonObject.getString("accountId");
-        profileIconId = jsonObject.getInt("profileIconId");
-        summonerLevel = jsonObject.getInt("summonerLevel");
-    }
-
-    public String getEncryptedSummonerId() {
-        return encryptedSummonerId;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public int getProfileIconId() {
-        return profileIconId;
-    }
-
-    public int getSummonerLevel() {
-        return summonerLevel;
+        name = jsonObject.getString("name");
+        summonerID = jsonObject.getString("id");
+        accountID = jsonObject.getString("accountId");
+        iconID = jsonObject.getInt("profileIconId");
+        level = jsonObject.getInt("summonerLevel");
     }
 
     public String getSummonerName() {
-        return summonerName;
+        return name;
+    }
+
+    public String getEncryptedSummonerId() {
+        return summonerID;
+    }
+
+    public String getEncryptedAccountId() {
+        return accountID;
+    }
+
+    public int getProfileIconId() {
+        return iconID;
+    }
+
+    public int getSummonerLevel() {
+        return level;
     }
 }
