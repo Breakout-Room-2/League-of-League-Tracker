@@ -30,7 +30,7 @@ function getTimeLeft($date){
         Write-Host ($expiration_notice -f $time_left.Hours, $time_left.Minutes);
     } else {
         Write-Host "Key expired";
-        edge "https://developer.riotgames.com/";
+        edge "https://developer.riotgames.com/login";
         Read-Host "Press enter once you've regenrated the API key";
     }
 
@@ -84,8 +84,8 @@ function writeApiKey($dev_page){
 # so resorted to regex to parse the response content for expiration date
 # A series of regex replacements removes extra characters and ordinalls for 
 # a smoother conversion to DateTime
-    $date = ((($dev_page.content -split "Expir")[1] -split "</b>")[0] -split "`n")[2];
-    @('\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
+    $date = ($dev_page.content | Select-String "Expir(.*\s){3}").Matches.Value;
+    @('Expir.*\s', '\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
         $date = $date -replace $_;
     }
 
