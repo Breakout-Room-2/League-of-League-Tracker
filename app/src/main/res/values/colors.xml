@@ -11,4 +11,5 @@
     <color name="league_yellow_light">#e0d341</color>
     <color name="league_yellow_dark">#ccc543</color>
     <color name="grey">#534E4E</color>
+    <color name="lightGrey">#C4C4C4</color>
 </resources>

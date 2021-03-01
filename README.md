@@ -1,18 +1,22 @@
 # League-of-League-Tracker
 
+## DEMO
+
+<img src='demo.gif' title='Demo video' width='' alt='Demo video' />
+
 ## 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
 
- * User can search stats by summoner name
- * User can view recent match history 
- * User can see current ranking,graph of win/loss ratio, and average KDA
- * User can click/tap on a match for more info
+ * [x] User can search stats by summoner name
+ * [ ] User can view recent match history 
+ * [ ] User can see current ranking,graph of win/loss ratio, and average KDA
+ * [ ] User can click/tap on a match for more info
 
 **Optional Nice-to-have Stories**
 
- * Infinite pagination for match history - recent 10 can be continually expanded to more matches
- * Favorites/Recent searches listed on screen for convenience
+ * [ ] Infinite pagination for match history - recent 10 can be continually expanded to more matches
+ * [ ] Favorites/Recent searches listed on screen for convenience
 
 ## 2. Screen Archetypes
 
@@ -50,46 +54,48 @@
 ### Models
 
 #### Summoner
-Name      | Type      | Description
---------- | :-------: | -----------
-accountID | String    | Encrypted account ID
-name      | Sring     | Summoner name
-id        | String    | Encrypted summoner ID
+Name        | Type      | Description
+----------- | :-------: | -----------
+name        | Sring     | Summoner name
+summonerID  | String    | Encrypted summoner ID
+accountID   | String    | Encrypted account ID
+iconID      | int       | profile icon ID
+level       | int       | summoner account level
     - Note: encrypted values are encrypted using api key, thus are unique per api key
 
-#### Champion
-Name          | Type  | Description
-------------- | :---: | -----------
-championID    | int   | Champion ID
-championLevel | int   | Mastery Level for a champion
-championPoints| int   | Mastery Points for a champion
+#### Mastery
+Name            | Type  | Description
+--------------- | :---: | -----------
+championID      | int   | Champion ID
+masteryLevel    | int   | Mastery Level for a champion
+masteryPoints   | int   | Mastery Points for a champion
 
 #### League
- Name           | Type          | Description
- -------------- | :-----------: | -----------
- queueType      | String        | SoloQueue, Flex
- tier           | String        | Iron, Bronze, Silver, Gold, etc.
- rank           | String        | rank I, II, III, IV within tier
- leaguePoints   | int           | lp progression towards next rank/tier
- wins           | int           | total ranked wins
- losses         | int           | total ranked losses
- hotStreak      | boolean       | 3+ wins in a row
- miniSeries     | MiniSeries    | series if summoner is in promos
+Name           | Type          | Description
+-------------- | :-----------: | -----------
+queue          | String        | SoloQueue, Flex
+tier           | String        | Iron, Bronze, Silver, Gold, etc.
+rank           | String        | rank I, II, III, IV within tier
+lp             | int           | 'League Points' progression towards next rank/tier
+wins           | int           | total ranked wins
+losses         | int           | total ranked losses
+hotStreak      | boolean       | 3+ wins in a row
+miniSeries     | MiniSeries    | series if summoner is in promos
 
 #### MiniSeries
- Name       | Type      | Description
- ---------- | :-------: | -----------
- losses     | int       | number of losses
- progress   | int       | W,L,N representation of series
- target     | int       | required wins to promote
- win        | String    | number of wins
- 
+Name       | Type      | Description
+---------- | :-------: | -----------
+losses     | int       | number of losses
+wins       | int       | number of wins
+target     | int       | required wins to promote
+progress   | String    | W,L,N representation of serie
+
 #### Matchlist
 Name      | Type                      | Description
 --------- | :-----------------------: | -----------
-matches   | List [MatchReference]     | List of match references
+matches   | List [MatchSummary]     | List of match references
 
-#### MatchReference
+#### MatchSummary
 Name      | Type      | Description
 --------- | :-------: | -----------
 gameID    | long      | game ID unique to match
