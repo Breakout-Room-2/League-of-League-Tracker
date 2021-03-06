@@ -47,6 +47,5 @@ public class SearchActivity extends AppCompatActivity {
         i.putExtra("summonerName", summonerName);
 
         startActivity(i);
-        finish();
     }
 }
