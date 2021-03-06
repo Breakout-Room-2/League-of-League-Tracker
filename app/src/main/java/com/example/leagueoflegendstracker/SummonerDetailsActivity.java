@@ -49,7 +49,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     ArrayList<MatchSummary> matchList;
 
     ImageView ivChampOne, ivChampTwo, ivChampThree, ivSummonerIcon;
-    TextView tvSummonerName, tvSummonerLevel, tvChampOne, tvChampTwo, tvChampThree;
+    TextView tvSummonerName, tvSummonerLevel, tvChampOne, tvChampTwo, tvChampThree, tvRank;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         ivSummonerIcon = findViewById(R.id.ivSummonerIcon);
         tvSummonerName = findViewById(R.id.tvSummonerName);
         tvSummonerLevel = findViewById(R.id.tvLevel);
+        tvRank = findViewById(R.id.tvRank);
 
         ivChampOne = findViewById(R.id.ivChampOne);
         ivChampTwo = findViewById(R.id.ivChampTwo);
@@ -138,6 +139,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 break;
             case LEAGUE_ENDPOINT:
                 leagues = League.fromJsonArray(json.jsonArray);
+                setRank();
                 Log.i(TAG, "Created list of league (ranking) models w/ ref: " + leagues);
                 break;
             case MATCH_LIST_ENDPOINT:
@@ -146,6 +148,10 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void setRank() {
+        tvRank.setText(leagues.get(League.getHigherLeague(leagues)).getRanking());
     }
 
     private void setProfile() {
