@@ -1,7 +1,5 @@
 package com.example.leagueoflegendstracker.models;
 
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +24,52 @@ public class League {
             miniSeries  = new MiniSeries(jsonObject.getJSONObject("miniSeries"));
     }
 
+    public String getRanking(){
+        return tier + " " + rank;
+    }
+
+    public int getValue(){
+        int value = 0;
+        switch (tier){
+            case "Diamond":
+                value += 1000;
+            case "Platinum":
+                value += 1000;
+            case "Gold":
+                value += 1000;
+            case "Silver":
+                value += 1000;
+            case "Bronze":
+                value += 1000;
+            default:
+                value += 0;
+        }
+        switch (rank){
+            case "IV":
+                value += 200;
+            case "III":
+                value += 200;
+            case "II":
+                value += 200;
+            default:
+                value += 0;
+        }
+        return value + lp;
+    }
+
     public static ArrayList<League> fromJsonArray(JSONArray jsonArray) throws JSONException {
         ArrayList<League> leagues = new ArrayList<>();
         for (int i=0; i<jsonArray.length(); i++)
             leagues.add(new League((JSONObject) jsonArray.get(i)));
         return leagues;
+    }
+
+    public static int getHigherLeague(ArrayList<League> leagues){
+        if(leagues.size() == 0)
+            return -1;
+        else if(leagues.size() == 1 || leagues.get(0).getValue() > leagues.get(1).getValue())
+            return 0;
+        return 1;
     }
 
     public class MiniSeries {
