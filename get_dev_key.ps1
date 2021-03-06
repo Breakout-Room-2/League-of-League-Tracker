@@ -30,7 +30,7 @@ function getTimeLeft($date){
         Write-Host ($expiration_notice -f $time_left.Hours, $time_left.Minutes);
     } else {
         Write-Host "Key expired";
-        edge "https://developer.riotgames.com/";
+        edge "https://developer.riotgames.com/login";
         Read-Host "Press enter once you've regenrated the API key";
     }
 
