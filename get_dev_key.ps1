@@ -85,7 +85,7 @@ function writeApiKey($dev_page){
 # A series of regex replacements removes extra characters and ordinalls for 
 # a smoother conversion to DateTime
     $date = ($dev_page.content | Select-String "Expir(.*\s){3}").Matches.Value;
-    @('Expir.*\s', '\s\(.*', '@', 'th', 'rd', 'nd', 'st') | foreach {
+    @('Expir.*\s', '\s\(.*', '@', '(?<=\d)th', 'rd', 'nd', 'st') | foreach {
         $date = $date -replace $_;
     }
 
