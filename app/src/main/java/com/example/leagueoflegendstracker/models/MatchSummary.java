@@ -78,12 +78,12 @@ public class MatchSummary {
         return queueID;
     }
 
-    public int getUserIndex() {
-        return userIndex;
-    }
-
-    public Participant[] getParticipants() {
-        return participants;
+    public Participant getParticipantBySummonerName(String summonerName){
+        for (Participant participant : participants){
+            if (participant.name.equals(summonerName))
+                return participant;
+        }
+        return null;
     }
 
     public class Participant{
