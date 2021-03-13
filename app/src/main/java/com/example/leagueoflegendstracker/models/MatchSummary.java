@@ -28,17 +28,19 @@ public class MatchSummary {
     }
 
     public void setMatchDetails(JSONObject jsonObject, String userName) throws JSONException{
-        gameDuration = jsonObject.getLong("gameDuration");
+        JSONArray participantIDs    = jsonObject.getJSONArray("participantIdentities");
+        JSONArray participantsList  = jsonObject.getJSONArray("participants");
 
-        JSONArray participantsList = jsonObject.getJSONArray("participants");
         participants = new Participant[10];
+        gameDuration = jsonObject.getLong("gameDuration");
 
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
-            if (participants[i].name.equals(userName))
+            participants[i].setSummonerDetails(participantIDs.getJSONObject(i));
+            if (participants[i].name.equals(userName)) {
                 userIndex = i;
-            if (participants[i].team == getWinningTeam(jsonObject.getJSONArray("teams")))
-                win = true;
+                win = (participants[i].team == getWinningTeam(jsonObject.getJSONArray("teams")));
+            }
         }
     }
 
@@ -98,6 +100,11 @@ public class MatchSummary {
             spell1      = jsonObject.getInt("spell1Id");
             spell2      = jsonObject.getInt("spell2Id");
             stats = new Stats(jsonObject.getJSONObject("stats"));
+        }
+
+        public void setSummonerDetails(JSONObject player) throws JSONException{
+            name = player.getString("summonerName");
+            icon = player.getInt("profileIcon");
         }
 
         public String getName() {
