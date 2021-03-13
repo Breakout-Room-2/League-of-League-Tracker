@@ -41,8 +41,6 @@ public class League {
                 value += 1000;
             case "Bronze":
                 value += 1000;
-            default:
-                value += 0;
         }
         switch (rank){
             case "IV":
@@ -51,8 +49,6 @@ public class League {
                 value += 200;
             case "II":
                 value += 200;
-            default:
-                value += 0;
         }
         return value + lp;
     }
@@ -76,7 +72,7 @@ public class League {
         int wins, losses, target;
         String progress;
 
-        public MiniSeries(JSONObject jsonObject) throws  JSONException {
+        public MiniSeries(JSONObject jsonObject) throws JSONException {
             wins    = jsonObject.getInt("wins");
             losses  = jsonObject.getInt("losses");
             target  = jsonObject.getInt("target");
