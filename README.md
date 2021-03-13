@@ -90,57 +90,49 @@ wins       | int       | number of wins
 target     | int       | required wins to promote
 progress   | String    | W,L,N representation of serie
 
-#### Matchlist
-Name      | Type                      | Description
---------- | :-----------------------: | -----------
-matches   | List [MatchSummary]     | List of match references
-
 #### MatchSummary
-Name      | Type      | Description
---------- | :-------: | -----------
-gameID    | long      | game ID unique to match
-role      | String    | role of user in match 
-champion  | int       | (same as championID)
-queue     | int       | type of queue (e.g. ranked, draft)
-timestamp | long      | Date of match (in UnixEpochMilliseconds)
-
-#### Match
-Name          | Type                  | Description
-------------- | :-------------------: | -----------
-queueId       | int                   | type of queue and map
-gameCreation  | long                  | (same as timestamp)
-gameDuration  | long                  | match duration in seconds
-participants  | list[particpant]      | list of match participants
+Name          | Type             | Description
+------------- | :--------------: | -----------
+gameID        | long             | game ID unique to match
+timestamp     | long             | Date of match (in UnixEpochMilliseconds)
+gameDuration  | long             | match duration in seconds
+win           | boolean          | whether or not the match was won
+champion      | int              | (same as championID)
+queueID       | int              | type of queue/map (e.g. ranked, draft, aram) 
+userIndex     | int              | for quick access to user's [participant] info
+participants  | list[particpant] | list of match participants
 
 #### participant
 Name          | Type                  | Description
 ------------- | :-------------------: | -----------
-particpantID  | int                   | participant ID
-championID    | int                   | (same as championID)
-teamId        | int                   | 100 for blue, 200 for red side
-spell1Id      | int                   | first summoner spell ID
-spell2Id      | int                   | second summoner spell ID
-stats         | participantStats      | 
+name          | String                | summonerName
+ID            | int                   | participant ID
+champion      | int                   | (same as championID)
+team          | int                   | 100 for blue, 200 for red side
+spell1        | int                   | first summoner spell ID
+spell2        | int                   | second summoner spell ID
+icon          | int                   | profile icon ID (same as iconID)
+stats         | participantStats      | participant stats for current match
 
 #### participantStats
 Name                | Type                  | Description
 -------------       | :-------------------: | -----------
-item[0-6]           | int                   | itemID (resolved to item name/icon with db)
-champLevel          | int                   | champion level
+item[0-6]           | int[]                 | itemID (resolved to item name/icon with db)
+runes[0-5]          | int[]                 | chosen runes by ID (0-3 primary, 4-5 secondary)
+runeShards[0-2]     | int[]                 | chosen rune shards by ID (off, flex, def)
+runePrimary         | int                   | rune path for primary keystone ID
+runeSecondary       | int                   | rune path for secondary keystone ID
+level               | int                   | champion level
 kills               | int                   | champion kills
 deaths              | int                   | champion deaths
 assists             | int                   | champion assists
-totalDamageDealt    | long                  | total damage dealt
-totalMinionsKilled  | int                   | CS score
+CS                  | int                   | CS score (total minions killed)
 visionScore         | int                   | vision score (calculated by riot)
 visionWards         | int                   | control wards bought
 wardsPlaced         | int                   | total wards placed
 wardsKilled         | int                   | total wards killed
 goldEarned          | int                   | gold earned
-perk[0-5]           | int                   | runes used by ID (0-3 primary, 4-5 secondary)
-perkPrimaryStyle    | int                   | rune path for primary rune
-perkSubStyle        | int                   | rune path for secondary rune
-statPerk[0-2]       | int                   | rune shards chosen (offense, flex, defense)
+totalDamageDealt    | long                  | total damage dealt
 
 ### Networking
 
