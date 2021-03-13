@@ -127,7 +127,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "Success, with data: " + json);
+                Log.i(TAG, "Succesful API call to: " + url);
+                // Log.i(TAG, "Success, with data: " + json);
                 try {
                     createModel(endpoint, json);
                 } catch (JSONException e) {
@@ -146,17 +147,18 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         switch (endpoint){
             case MASTERIES_ENDPOINT:
                 top_masteries = Mastery.fromJSONArray(json.jsonArray);
-                getChampData();
                 Log.i(TAG, "Created list of top masteries model w/ refs: " + top_masteries);
+                getChampData();
                 break;
             case LEAGUE_ENDPOINT:
                 leagues = League.fromJsonArray(json.jsonArray);
-                setRank();
                 Log.i(TAG, "Created list of league (ranking) models w/ ref: " + leagues);
+                setRank();
                 break;
             case MATCH_LIST_ENDPOINT:
                 matchList = MatchSummary.fromJsonArray(json.jsonObject.getJSONArray("matches"));
                 Log.i(TAG, "Created list of match summary models w/ ref: " + matchList);
+                getMatchDetails();
                 break;
         }
 
@@ -189,7 +191,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         client.get(CHAMP_DATA, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "Success, with data: " + json);
+                Log.i(TAG, "Successful datadragon call to: " + CHAMP_DATA);
+                // Log.i(TAG, "Success, with data: " + json);
                 createChampData(json.jsonObject);
                 setMastery();
             }
