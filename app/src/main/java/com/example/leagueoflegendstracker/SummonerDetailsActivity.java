@@ -102,7 +102,15 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void getStats(AsyncHttpClient client, RequestParams params) {
+    private void setProfile() {
+        String pfp_url  = String.format(SUMMONER_ICONS_ENDPOINT, summoner.getProfileIconId());
+        String level    = String.format(getString(R.string.summoner_level), summoner.getSummonerLevel());
+        tvSummonerName.setText(summoner.getSummonerName());
+        tvSummonerLevel.setText(level);
+        Glide.with(this).load(pfp_url).into(ivSummonerIcon);
+    }
+
+    private void getStats() {
         Log.i(TAG, "Getting champion masteries for: " + summoner.getSummonerName());
         makeApiCall(MASTERIES_ENDPOINT, summoner.getEncryptedSummonerId());
 
@@ -156,14 +164,6 @@ public class SummonerDetailsActivity extends AppCompatActivity {
 
     private void setRank() {
         tvRank.setText(leagues.get(League.getHigherLeague(leagues)).getRanking());
-    }
-
-    private void setProfile() {
-        String pfp_url  = String.format(SUMMONER_ICON, summoner.getProfileIconId());
-        String level    = String.format(getString(R.string.summoner_level), summoner.getSummonerLevel());
-        tvSummonerName.setText(summoner.getSummonerName());
-        tvSummonerLevel.setText(level);
-        Glide.with(this).load(pfp_url).into(ivSummonerIcon);
     }
 
     private void setMastery() {
