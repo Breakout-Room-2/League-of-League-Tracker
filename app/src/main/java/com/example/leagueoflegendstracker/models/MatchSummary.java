@@ -11,7 +11,7 @@ public class MatchSummary {
     long gameID, timeStamp, gameDuration;
     boolean win;
     int champion, queueID, userIndex;
-    Participant[] participants;
+    Participant[] participants = new Participant[10];
 
     public MatchSummary(JSONObject jsonObject) throws JSONException {
         gameID      = jsonObject.getLong("gameId");
@@ -28,11 +28,9 @@ public class MatchSummary {
     }
 
     public void setMatchDetails(JSONObject jsonObject, String userName) throws JSONException{
+        gameDuration = jsonObject.getLong("gameDuration");
         JSONArray participantIDs    = jsonObject.getJSONArray("participantIdentities");
         JSONArray participantsList  = jsonObject.getJSONArray("participants");
-
-        participants = new Participant[10];
-        gameDuration = jsonObject.getLong("gameDuration");
 
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
@@ -140,9 +138,9 @@ public class MatchSummary {
         }
 
         public class Stats{
-            int[] items;
-            int[] runes;
-            int[] runeShards;
+            int[] items = new int[7];
+            int[] runes = new int[6];
+            int[] runeShards = new int[3];
             int runePrimary, runeSecondary;
             int level, kills, deaths, assists, CS, visionScore,
             visionWards, wardsPlaced, wardsKilled, goldEarned;
