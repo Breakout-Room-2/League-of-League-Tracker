@@ -34,7 +34,7 @@ public class MatchSummary {
 
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
-            participants[i].setSummonerDetails(participantIDs.getJSONObject(i));
+            participants[i].setSummonerDetails(participantIDs.getJSONObject(i).getJSONObject("player"));
             if (participants[i].name.equals(userName)) {
                 userIndex = i;
                 win = (participants[i].team == getWinningTeam(jsonObject.getJSONArray("teams")));
@@ -46,12 +46,13 @@ public class MatchSummary {
         return participants[userIndex];
     }
 
-    // very ugly way of doing this - and pretty much this entire file
+    // very ugly way of doing this - but what isn't ugly in this entire file?
     private int getWinningTeam(JSONArray teams) throws JSONException{
-        int winningTeam = 100;
-        if (teams.getJSONObject(1).getString("win").equals("Win"))
-            winningTeam = 200;
-        return winningTeam;
+        JSONObject blue = teams.getJSONObject(0);
+        JSONObject red  = teams.getJSONObject(1);
+        if (blue.getString("win").equals("Win"))
+            return blue.getInt("teamId");
+        return red.getInt("teamId");
     }
 
     public long getGameID() {
