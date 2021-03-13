@@ -54,7 +54,39 @@ public class MatchSummary {
         return winningTeam;
     }
 
-    class Participant{
+    public long getGameID() {
+        return gameID;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public long getGameDuration() {
+        return gameDuration;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public int getChampion() {
+        return champion;
+    }
+
+    public int getQueueID() {
+        return queueID;
+    }
+
+    public int getUserIndex() {
+        return userIndex;
+    }
+
+    public Participant[] getParticipants() {
+        return participants;
+    }
+
+    public class Participant{
         String name;
         int ID, champion, team, spell1, spell2, iconID;
         Stats stats;
@@ -68,7 +100,39 @@ public class MatchSummary {
             stats = new Stats(jsonObject.getJSONObject("stats"));
         }
 
-        class Stats{
+        public String getName() {
+            return name;
+        }
+
+        public int getID() {
+            return ID;
+        }
+
+        public int getChampion() {
+            return champion;
+        }
+
+        public int getTeam() {
+            return team;
+        }
+
+        public int getSpell1() {
+            return spell1;
+        }
+
+        public int getSpell2() {
+            return spell2;
+        }
+
+        public int getIconID() {
+            return iconID;
+        }
+
+        public Stats getStats() {
+            return stats;
+        }
+
+        public class Stats{
             int[] items;
             int[] runes;
             int[] runeShards;
@@ -97,6 +161,70 @@ public class MatchSummary {
                 wardsKilled = jsonObject.getInt("wardsKilled");
                 goldEarned  = jsonObject.getInt("goldEarned");
                 totalDamageDealt    = jsonObject.getLong("totalDamageDealt");
+            }
+
+            public int[] getItems() {
+                return items;
+            }
+
+            public int[] getRunes() {
+                return runes;
+            }
+
+            public int[] getRuneShards() {
+                return runeShards;
+            }
+
+            public int getRunePrimary() {
+                return runePrimary;
+            }
+
+            public int getRuneSecondary() {
+                return runeSecondary;
+            }
+
+            public int getLevel() {
+                return level;
+            }
+
+            public int getKills() {
+                return kills;
+            }
+
+            public int getDeaths() {
+                return deaths;
+            }
+
+            public int getAssists() {
+                return assists;
+            }
+
+            public int getCS() {
+                return CS;
+            }
+
+            public int getVisionScore() {
+                return visionScore;
+            }
+
+            public int getVisionWards() {
+                return visionWards;
+            }
+
+            public int getWardsPlaced() {
+                return wardsPlaced;
+            }
+
+            public int getWardsKilled() {
+                return wardsKilled;
+            }
+
+            public int getGoldEarned() {
+                return goldEarned;
+            }
+
+            public long getTotalDamageDealt() {
+                return totalDamageDealt;
             }
         }
     }
