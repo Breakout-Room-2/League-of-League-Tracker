@@ -28,17 +28,18 @@ import okhttp3.Headers;
 
 public class SummonerDetailsActivity extends AppCompatActivity {
 
-    public static final String TAG = "SummonerDetailsActivity";
-    public static final String API_KEY = BuildConfig.API_KEY;
+    public static final String TAG      = "SummonerDetailsActivity";
+    public static final String API_KEY  = BuildConfig.API_KEY;
 
     public static final String BASE_URL = "https://na1.api.riotgames.com%s";
-    public static final String SUMMONER_ENDPOINT = "/lol/summoner/v4/summoners/by-name/%s";
-    public static final String MATCH_LIST_ENDPOINT = "/lol/match/v4/matchlists/by-account/%s";
-    public static final String MASTERIES_ENDPOINT = "/lol/champion-mastery/v4/champion-masteries/by-summoner/%s";
-    public static final String LEAGUE_ENDPOINT = "/lol/league/v4/entries/by-summoner/%s";
+    public static final String SUMMONER_ENDPOINT      = "/lol/summoner/v4/summoners/by-name/%s";
+    public static final String MASTERIES_ENDPOINT     = "/lol/champion-mastery/v4/champion-masteries/by-summoner/%s";
+    public static final String LEAGUE_ENDPOINT        = "/lol/league/v4/entries/by-summoner/%s";
+    public static final String MATCH_LIST_ENDPOINT    = "/lol/match/v4/matchlists/by-account/%s";
+    public static final String MATCH_DETAILS_ENDPOINT = "/lol/match/v4/matches/%s";
 
-    public static final String SUMMONER_ICON = "https://cdn.communitydragon.org/latest/profile-icon/%s";
-    public static final String CHAMP_ICON = "https://cdn.communitydragon.org/latest/champion/%s/square";
+    public static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
+    public static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
     public static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.3.1/data/en_US/champion.json";
 
     HashMap<Integer, String> champData;
@@ -169,9 +170,9 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         String champOne = champData.get(champOneID);
         String champTwo = champData.get(champTwoID);
         String champThree = champData.get(champThreeID);
-        String champIconOneUrl = String.format(CHAMP_ICON, champOneID);
-        String champIconTwoUrl = String.format(CHAMP_ICON, champTwoID);
-        String champIconThreeUrl = String.format(CHAMP_ICON, champThreeID);
+        String champIconOneUrl = String.format(CHAMP_ICONS_ENDPOINT, champOneID);
+        String champIconTwoUrl = String.format(CHAMP_ICONS_ENDPOINT, champTwoID);
+        String champIconThreeUrl = String.format(CHAMP_ICONS_ENDPOINT, champThreeID);
         tvChampOne.setText(champOne);
         tvChampTwo.setText(champTwo);
         tvChampThree.setText(champThree);
