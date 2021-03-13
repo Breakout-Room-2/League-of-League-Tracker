@@ -42,6 +42,9 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     public static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
     public static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.3.1/data/en_US/champion.json";
 
+    AsyncHttpClient client;
+    RequestParams params;
+
     HashMap<Integer, String> champData;
 
     Summoner summoner;
@@ -71,8 +74,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         Intent i = getIntent();
         String summonerName = i.getStringExtra("summonerName");
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
+        client = new AsyncHttpClient();
+        params = new RequestParams();
         params.put("api_key", API_KEY);
 
         String url = String.format(BASE_URL, String.format(SUMMONER_ENDPOINT, summonerName));
@@ -86,7 +89,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                     summoner = new Summoner(json.jsonObject);
                     Log.i(TAG, "Successfully created summoner model w/ ref: "+summoner.toString());
                     setProfile();
-                    getStats(client, params);
+                    getStats();
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit JsonException: "+e);
                 }
@@ -101,16 +104,16 @@ public class SummonerDetailsActivity extends AppCompatActivity {
 
     private void getStats(AsyncHttpClient client, RequestParams params) {
         Log.i(TAG, "Getting champion masteries for: " + summoner.getSummonerName());
-        makeApiCall(MASTERIES_ENDPOINT, summoner.getEncryptedSummonerId(), client, params);
+        makeApiCall(MASTERIES_ENDPOINT, summoner.getEncryptedSummonerId());
 
         Log.i(TAG, "Getting summoner league ranking for: " + summoner.getSummonerName());
-        makeApiCall(LEAGUE_ENDPOINT, summoner.getEncryptedSummonerId(), client, params);
+        makeApiCall(LEAGUE_ENDPOINT, summoner.getEncryptedSummonerId());
 
         Log.i(TAG, "Getting summoner matchlist for: " + summoner.getSummonerName());
-        makeApiCall(MATCH_LIST_ENDPOINT, summoner.getEncryptedAccountId(), client, params);
+        makeApiCall(MATCH_LIST_ENDPOINT, summoner.getEncryptedAccountId());
     }
 
-    private void makeApiCall(String endpoint, String data, AsyncHttpClient client, RequestParams params){
+    private void makeApiCall(String endpoint, String data){
         String url = String.format(BASE_URL, String.format(endpoint, data));
         Log.i(TAG, "Making call to " + url);
         client.get(url, params, new JsonHttpResponseHandler() {
