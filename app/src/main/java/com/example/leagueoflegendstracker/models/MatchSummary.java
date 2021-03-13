@@ -88,7 +88,7 @@ public class MatchSummary {
 
     public class Participant{
         String name;
-        int ID, champion, team, spell1, spell2, iconID;
+        int ID, champion, team, spell1, spell2, icon;
         Stats stats;
 
         public Participant(JSONObject jsonObject) throws JSONException{
@@ -124,8 +124,8 @@ public class MatchSummary {
             return spell2;
         }
 
-        public int getIconID() {
-            return iconID;
+        public int getIcon() {
+            return icon;
         }
 
         public Stats getStats() {
