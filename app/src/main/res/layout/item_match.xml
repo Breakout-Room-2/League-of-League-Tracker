@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="20dp"
     android:padding="10dp"
-    android:background="@drawable/light_grey_background"
+    android:background="@drawable/lighter_grey_background"
     >
 
 
