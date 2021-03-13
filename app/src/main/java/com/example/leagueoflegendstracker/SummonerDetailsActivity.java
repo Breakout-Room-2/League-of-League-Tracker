@@ -112,16 +112,24 @@ public class SummonerDetailsActivity extends AppCompatActivity {
 
     private void getStats() {
         Log.i(TAG, "Getting champion masteries for: " + summoner.getSummonerName());
-        makeApiCall(MASTERIES_ENDPOINT, summoner.getEncryptedSummonerId());
+        makeApiCall(MASTERIES_ENDPOINT, summoner.getEncryptedSummonerId(), null);
 
         Log.i(TAG, "Getting summoner league ranking for: " + summoner.getSummonerName());
-        makeApiCall(LEAGUE_ENDPOINT, summoner.getEncryptedSummonerId());
+        makeApiCall(LEAGUE_ENDPOINT, summoner.getEncryptedSummonerId(), null);
 
         Log.i(TAG, "Getting summoner matchlist for: " + summoner.getSummonerName());
-        makeApiCall(MATCH_LIST_ENDPOINT, summoner.getEncryptedAccountId());
+        makeApiCall(MATCH_LIST_ENDPOINT, summoner.getEncryptedAccountId(), null);
     }
 
-    private void makeApiCall(String endpoint, String data){
+    private void getMatchDetails() {
+        for(MatchSummary match:matchList) {
+            long ID = match.getGameID();
+            Log.i(TAG, "Getting match details for matchID: " + ID);
+            makeApiCall(MATCH_DETAILS_ENDPOINT, String.valueOf(ID), match);
+        }
+    }
+
+    private void makeApiCall(String endpoint, String data, MatchSummary match){
         String url = String.format(BASE_URL, String.format(endpoint, data));
         Log.i(TAG, "Making call to " + url);
         client.get(url, params, new JsonHttpResponseHandler() {
@@ -130,7 +138,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 Log.i(TAG, "Succesful API call to: " + url);
                 // Log.i(TAG, "Success, with data: " + json);
                 try {
-                    createModel(endpoint, json);
+                    createModel(endpoint, json, match);
                 } catch (JSONException e) {
                     Log.i(TAG, "Hit JsonException " + e);
                 }
@@ -143,7 +151,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void createModel(String endpoint, JsonHttpResponseHandler.JSON json) throws JSONException {
+    private void createModel(String endpoint, JsonHttpResponseHandler.JSON json, MatchSummary match) throws JSONException {
         switch (endpoint){
             case MASTERIES_ENDPOINT:
                 top_masteries = Mastery.fromJSONArray(json.jsonArray);
@@ -159,6 +167,9 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 matchList = MatchSummary.fromJsonArray(json.jsonObject.getJSONArray("matches"));
                 Log.i(TAG, "Created list of match summary models w/ ref: " + matchList);
                 getMatchDetails();
+                break;
+            case MATCH_DETAILS_ENDPOINT:
+                match.setMatchDetails(json.jsonObject, summoner.getSummonerName());
                 break;
         }
 
