@@ -182,4 +182,13 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="250dp" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/caret_left" />
+
 </RelativeLayout>
