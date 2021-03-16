@@ -51,7 +51,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/cvChamp"
-        tools:text="VICTORY" />
+        tools:text="DEFEAT" />
 
     <TextView
         android:id="@+id/tvMode"
