@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="20dp"
     android:padding="10dp"
-    android:background="@drawable/lighter_grey_background"
+    android:background="@drawable/light_red_background"
     >
 
 
@@ -180,13 +180,13 @@
 
 
     <!--    <TextView-->
-<!--        android:id="@+id/tvTime"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/tvCS"-->
-<!--        android:layout_marginStart="130dp"-->
-<!--        android:layout_marginTop="0dp"-->
-<!--        android:layout_toEndOf="@+id/cvChamp"-->
-<!--        tools:text="25 min ago" />-->
+    <!--        android:id="@+id/tvTime"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/tvCS"-->
+    <!--        android:layout_marginStart="130dp"-->
+    <!--        android:layout_marginTop="0dp"-->
+    <!--        android:layout_toEndOf="@+id/cvChamp"-->
+    <!--        tools:text="25 min ago" />-->
 
 </RelativeLayout>
