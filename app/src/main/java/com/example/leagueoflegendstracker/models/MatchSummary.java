@@ -10,7 +10,7 @@ import java.util.Locale;
 public class MatchSummary {
     long gameID, timeStamp, gameDuration;
     boolean win;
-    int champion, queueID, userIndex, spell1, spell2;
+    int champion, queueID, userIndex;
     Participant[] participants = new Participant[10];
 
     public MatchSummary(JSONObject jsonObject) throws JSONException {
@@ -38,8 +38,6 @@ public class MatchSummary {
             if (participants[i].name.equals(userName)) {
                 userIndex = i;
                 win = (participants[i].team == getWinningTeam(jsonObject.getJSONArray("teams")));
-                spell1 = participants[i].spell1;
-                spell2 = participants[i].spell2;
             }
         }
     }
@@ -79,6 +77,10 @@ public class MatchSummary {
 
     public int getQueueID() {
         return queueID;
+    }
+
+    public Participant getUserParticipant(){
+        return participants[userIndex];
     }
 
     public Participant getParticipantBySummonerName(String summonerName){
