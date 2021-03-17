@@ -18,11 +18,8 @@ import com.example.leagueoflegendstracker.models.MatchSummary;
 import com.example.leagueoflegendstracker.models.Summoner;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import okhttp3.Headers;
 
@@ -38,6 +35,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     public static final String MATCH_LIST_ENDPOINT    = "/lol/match/v4/matchlists/by-account/%s";
     public static final String MATCH_DETAILS_ENDPOINT = "/lol/match/v4/matches/%s";
 
+    private int counter = 0;
+    
     AsyncHttpClient client = new AsyncHttpClient();
     RequestParams params = new RequestParams();
 
@@ -160,10 +159,16 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 getMatchDetails();
                 break;
             case MATCH_DETAILS_ENDPOINT:
+                if (++counter == 10) {
+                    fillRecycler();
+                }
                 match.setMatchDetails(json.jsonObject, summoner.getSummonerName());
                 break;
         }
 
+    }
+
+    private void fillRecycler() {
     }
 
     private void setRank() {
