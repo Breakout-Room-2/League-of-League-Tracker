@@ -38,14 +38,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     public static final String MATCH_LIST_ENDPOINT    = "/lol/match/v4/matchlists/by-account/%s";
     public static final String MATCH_DETAILS_ENDPOINT = "/lol/match/v4/matches/%s";
 
-    public static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
-    public static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
-    public static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.3.1/data/en_US/champion.json";
-
-    AsyncHttpClient client;
-    RequestParams params;
-
-    HashMap<Integer, String> champData;
+    AsyncHttpClient client = new AsyncHttpClient();
+    RequestParams params = new RequestParams();
 
     Summoner summoner;
     ArrayList<Mastery> top_masteries;
@@ -74,8 +68,6 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         Intent i = getIntent();
         String summonerName = i.getStringExtra("summonerName");
 
-        client = new AsyncHttpClient();
-        params = new RequestParams();
         params.put("api_key", API_KEY);
 
         String url = String.format(BASE_URL, String.format(SUMMONER_ENDPOINT, summonerName));
@@ -103,11 +95,10 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     }
 
     private void setProfile() {
-        String pfp_url  = String.format(SUMMONER_ICONS_ENDPOINT, summoner.getProfileIconId());
         String level    = String.format(getString(R.string.summoner_level), summoner.getSummonerLevel());
-        tvSummonerName.setText(summoner.getSummonerName());
         tvSummonerLevel.setText(level);
-        Glide.with(this).load(pfp_url).into(ivSummonerIcon);
+        tvSummonerName.setText(summoner.getSummonerName());
+        IdConverter.loadSummonerIcon(this, ivSummonerIcon, summoner.getProfileIconId());
     }
 
     private void getStats() {
@@ -156,7 +147,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
             case MASTERIES_ENDPOINT:
                 top_masteries = Mastery.fromJSONArray(json.jsonArray);
                 Log.i(TAG, "Created list of top masteries model w/ refs: " + top_masteries);
-                getChampData();
+                setMastery();
                 break;
             case LEAGUE_ENDPOINT:
                 leagues = League.fromJsonArray(json.jsonArray);
@@ -183,51 +174,11 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         int champOneID = top_masteries.get(0).getChampionID();
         int champTwoID = top_masteries.get(1).getChampionID();
         int champThreeID = top_masteries.get(2).getChampionID();
-        String champOne = champData.get(champOneID);
-        String champTwo = champData.get(champTwoID);
-        String champThree = champData.get(champThreeID);
-        String champIconOneUrl = String.format(CHAMP_ICONS_ENDPOINT, champOneID);
-        String champIconTwoUrl = String.format(CHAMP_ICONS_ENDPOINT, champTwoID);
-        String champIconThreeUrl = String.format(CHAMP_ICONS_ENDPOINT, champThreeID);
-        tvChampOne.setText(champOne);
-        tvChampTwo.setText(champTwo);
-        tvChampThree.setText(champThree);
-        Glide.with(this).load(champIconOneUrl).into(ivChampOne);
-        Glide.with(this).load(champIconTwoUrl).into(ivChampTwo);
-        Glide.with(this).load(champIconThreeUrl).into(ivChampThree);
-    }
-
-    private void getChampData(){
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(CHAMP_DATA, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.i(TAG, "Successful datadragon call to: " + CHAMP_DATA);
-                // Log.i(TAG, "Success, with data: " + json);
-                createChampData(json.jsonObject);
-                setMastery();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.i(TAG, "Failure, with data: " + response);
-            }
-        });
-    }
-
-    private void createChampData(JSONObject json) {
-        try {
-            champData = new HashMap<>();
-            JSONObject data = json.getJSONObject("data");
-
-            for (Iterator<String> keys = data.keys(); keys.hasNext(); ) {
-                JSONObject champ = data.getJSONObject(keys.next());
-                int champID = Integer.parseInt(champ.getString("key"));
-                String champName = champ.getString("name");
-                champData.put(champID, champName);
-            }
-        } catch (JSONException e) {
-            Log.i(TAG, "Ran into jsonException: " + e);
-        }
+        IdConverter.loadChampIcon(this, ivChampOne, champOneID);
+        IdConverter.loadChampIcon(this, ivChampTwo, champTwoID);
+        IdConverter.loadChampIcon(this, ivChampThree, champThreeID);
+        IdConverter.loadChampName(this, tvChampOne, champOneID);
+        IdConverter.loadChampName(this, tvChampTwo, champTwoID);
+        IdConverter.loadChampName(this, tvChampThree, champThreeID);
     }
 }
