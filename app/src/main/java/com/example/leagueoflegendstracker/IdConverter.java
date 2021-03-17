@@ -23,7 +23,7 @@ public class IdConverter {
     private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
     private static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
     private static final String SPELL_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
-    private static final String ITEMS_ICONS_ENDPOINT    = "";
+    private static final String ITEMS_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/%s.png";
     private static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/champion.json";
     private static final String SPELL_DATA = "";
     private static final String ITEMS_DATA = "";
@@ -39,6 +39,10 @@ public class IdConverter {
 
     public static void loadChampIcon(Context context, ImageView view, int champID){
         loadIcon(context, view, champID, CHAMP_ICONS_ENDPOINT);
+    }
+
+    public static void loadItemIcon(Context context, ImageView view, int itemID){
+        loadIcon(context, view, itemID, ITEMS_ICONS_ENDPOINT);
     }
 
     private static void loadIcon(Context context, ImageView view, int ID, String ENDPOINT){
