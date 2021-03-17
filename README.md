@@ -10,7 +10,7 @@
 
  * [x] User can search stats by summoner name
  * [ ] User can view recent match history 
- * [ ] User can see current ranking,graph of win/loss ratio, and average KDA
+ * [x] User can also see current ranking and average KDA
  * [ ] User can click/tap on a match for more info
 
 **Optional Nice-to-have Stories**
