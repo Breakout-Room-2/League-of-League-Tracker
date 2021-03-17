@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -44,6 +46,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     ArrayList<Mastery> top_masteries;
     ArrayList<League> leagues;
     ArrayList<MatchSummary> matchList;
+    RecyclerView rvMatches;
+    MatchDetailsAdapter adapter;
 
     ImageView ivChampOne, ivChampTwo, ivChampThree, ivSummonerIcon;
     TextView tvSummonerName, tvSummonerLevel, tvChampOne, tvChampTwo, tvChampThree, tvRank;
@@ -64,6 +68,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         tvChampTwo = findViewById(R.id.tvChampTwo);
         tvChampThree =  findViewById(R.id.tvChampThree);
 
+
         Intent i = getIntent();
         String summonerName = i.getStringExtra("summonerName");
 
@@ -72,6 +77,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         String url = String.format(BASE_URL, String.format(SUMMONER_ENDPOINT, summonerName));
 
         Log.i(TAG, "Making call to: " + url);
+
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -91,6 +97,14 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 Log.d(TAG, "Failure, with resp: "+response);
             }
         });
+
+        rvMatches = findViewById(R.id.rvMatchHistory);
+        matchList = new ArrayList<>();
+        adapter = new MatchDetailsAdapter(this, matchList);
+        rvMatches.setLayoutManager(new LinearLayoutManager(this));
+        rvMatches.setAdapter(adapter);
+
+
     }
 
     private void setProfile() {
@@ -169,6 +183,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     }
 
     private void fillRecycler() {
+        adapter.addAll(matchList);
     }
 
     private void setRank() {
