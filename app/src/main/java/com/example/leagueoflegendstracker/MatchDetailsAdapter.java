@@ -1,7 +1,6 @@
 package com.example.leagueoflegendstracker;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.leagueoflegendstracker.models.MatchSummary;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-
-import okhttp3.Headers;
-
-import static android.content.ContentValues.TAG;
 
 //import static com.example.leagueoflegendstracker.IdConverter.CHAMP_DATA;
 //
@@ -84,7 +73,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_match_defeat, parent, false);
+        View view  = LayoutInflater.from(context).inflate(R.layout.item_match, parent, false);
         return new ViewHolder(view);
     }
 
