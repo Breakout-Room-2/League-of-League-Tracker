@@ -56,18 +56,19 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner_details);
 
-        ivSummonerIcon = findViewById(R.id.ivSummonerIcon);
-        tvSummonerName = findViewById(R.id.tvSummonerName);
+        ivSummonerIcon  = findViewById(R.id.ivSummonerIcon);
+        tvSummonerName  = findViewById(R.id.tvSummonerName);
         tvSummonerLevel = findViewById(R.id.tvLevel);
-        tvRank = findViewById(R.id.tvRank);
+        tvRank          = findViewById(R.id.tvRank);
 
-        ivChampOne = findViewById(R.id.ivChampOne);
-        ivChampTwo = findViewById(R.id.ivChampTwo);
-        ivChampThree = findViewById(R.id.ivChampThree);
-        tvChampOne = findViewById(R.id.tvChampOne);
-        tvChampTwo = findViewById(R.id.tvChampTwo);
-        tvChampThree =  findViewById(R.id.tvChampThree);
+        ivChampOne      = findViewById(R.id.ivChampOne);
+        ivChampTwo      = findViewById(R.id.ivChampTwo);
+        ivChampThree    = findViewById(R.id.ivChampThree);
+        tvChampOne      = findViewById(R.id.tvChampOne);
+        tvChampTwo      = findViewById(R.id.tvChampTwo);
+        tvChampThree    =  findViewById(R.id.tvChampThree);
 
+        rvMatches = findViewById(R.id.rvMatchHistory);
 
         Intent i = getIntent();
         String summonerName = i.getStringExtra("summonerName");
@@ -97,14 +98,6 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 Log.d(TAG, "Failure, with resp: "+response);
             }
         });
-
-        rvMatches = findViewById(R.id.rvMatchHistory);
-        matchList = new ArrayList<>();
-        adapter = new MatchDetailsAdapter(this, matchList);
-        rvMatches.setLayoutManager(new LinearLayoutManager(this));
-        rvMatches.setAdapter(adapter);
-
-
     }
 
     private void setProfile() {
@@ -173,17 +166,19 @@ public class SummonerDetailsActivity extends AppCompatActivity {
                 getMatchDetails();
                 break;
             case MATCH_DETAILS_ENDPOINT:
+                match.setMatchDetails(json.jsonObject, summoner.getSummonerName());
                 if (++counter == 10) {
                     fillRecycler();
                 }
-                match.setMatchDetails(json.jsonObject, summoner.getSummonerName());
                 break;
         }
 
     }
 
     private void fillRecycler() {
-        adapter.addAll(matchList);
+        adapter = new MatchDetailsAdapter(this, matchList);
+        rvMatches.setLayoutManager(new LinearLayoutManager(this));
+        rvMatches.setAdapter(adapter);
     }
 
     private void setRank() {
