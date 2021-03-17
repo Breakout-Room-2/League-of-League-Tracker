@@ -12,6 +12,11 @@
     <color name="league_yellow_dark">#ccc543</color>
     <color name="grey">#534E4E</color>
     <color name="lighter_grey">#e7e7e7</color>
+    <color name="text_blue">#4B8FF9</color>
+    <color name="text_red">#F94B4B</color>
+    <color name="cs">#8F00FF</color>
+    <color name="vision">#001AFF</color>
+    <color name="gold">#FFF500</color>
     <color name="lightGrey">#C4C4C4</color>
     <color name="lighter_blue">#ACD7FF</color>
     <color name="light_red">#FFB2B2</color>
