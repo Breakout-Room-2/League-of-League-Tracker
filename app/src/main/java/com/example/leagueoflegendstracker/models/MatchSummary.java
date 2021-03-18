@@ -91,6 +91,15 @@ public class MatchSummary {
         return null;
     }
 
+    public Participant[] getTeam(int teamID){
+        Participant[] team = new Participant[5];
+        int i = 0;
+        for (Participant participant : participants)
+            if (participant.team == teamID)
+                team[i++] = participant;
+        return team;
+    }
+
     public class Participant{
         String name;
         int ID, champion, team, spell1, spell2, icon;
