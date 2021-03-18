@@ -55,7 +55,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner_details);
-
+//
         ivSummonerIcon  = findViewById(R.id.ivSummonerIcon);
         tvSummonerName  = findViewById(R.id.tvSummonerName);
         tvSummonerLevel = findViewById(R.id.tvLevel);
