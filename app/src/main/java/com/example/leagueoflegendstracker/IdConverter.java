@@ -10,13 +10,11 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Queue;
 
 import okhttp3.Headers;
 
@@ -24,18 +22,21 @@ public class IdConverter {
     private static final String TAG = "IdConverter";
     private static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/champion.json";
     private static final String SPELL_DATA = "http://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/summoner.json";
+    private static final String RUNES_DATA = "http://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/runesReforged.json";
     private static final String QUEUE_DATA = "http://static.developer.riotgames.com/docs/lol/queues.json";
-    private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
     private static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
     private static final String SPELL_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
+    private static final String RUNES_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/img/%s";
     private static final String ITEMS_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/%s.png";
+    private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
 
-    private static HashMap<Integer, String> champData = new HashMap<>();
-    private static HashMap<Integer, String> spellData = new HashMap<>();
-    private static HashMap<Integer, String> queueData = new HashMap<>();
+    private static final HashMap<Integer, String> champData = new HashMap<>();
+    private static final HashMap<Integer, String> spellData = new HashMap<>();
+    private static final HashMap<Integer, String> queueData = new HashMap<>();
+    private static final HashMap<Integer, String> runesData = new HashMap<>();
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
-    private static RequestParams params = new RequestParams();
+    private static final AsyncHttpClient client = new AsyncHttpClient();
+    private static final RequestParams params = new RequestParams();
 
     public static void loadSummonerIcon(Context context, ImageView view, int profileID){
         loadIcon(context, view, profileID, SUMMONER_ICONS_ENDPOINT);
@@ -57,6 +58,17 @@ public class IdConverter {
             getSpellData(context, view, spellID);
         } else {
             loadIcon(context, view, spellData.get(spellID), SPELL_ICONS_ENDPOINT);
+        }
+    }
+
+    public static void loadRuneIcon(Context context, ImageView view, int runeID){
+        // All initial calls will have an empty HashMap since they're called in series and the
+        // network call isn't completed until waay later. Still necessary since getRuneData will
+        // call loadRuneIcon after the network call - thus just needed to avoid infinite looping
+        if (runesData.isEmpty()){
+            getRuneData(context, view, runeID);
+        } else {
+            loadIcon(context, view, runesData.get(runeID), RUNES_ICONS_ENDPOINT);
         }
     }
 
@@ -166,6 +178,39 @@ public class IdConverter {
                 int spellID = Integer.parseInt(spell.getString("key"));
                 String image_url = String.format(SPELL_ICONS_ENDPOINT, spell.getJSONObject("image").getString("full"));
                 spellData.put(spellID, image_url);
+            }
+        } catch (JSONException e) {
+            Log.i(TAG, "Ran into jsonException: " + e);
+        }
+    }
+
+    private static void getRuneData(Context context, ImageView view, int runeID){
+        client.get(RUNES_DATA, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "Successful datadragon call to: " + RUNES_DATA);
+                // check to make sure you don't fill in the HashMap multiple times
+                if (spellData.isEmpty())
+                    fillRuneData(json.jsonObject);
+                loadRuneIcon(context, view, runeID);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.i(TAG, "Failure, with resp: " + response);
+            }
+        });
+    }
+
+    private static void fillRuneData(JSONObject jsonObject){
+        try {
+            JSONObject data = jsonObject.getJSONObject("data");
+
+            for (Iterator<String> keys = data.keys(); keys.hasNext(); ) {
+                JSONObject keystone = data.getJSONObject(keys.next());
+                int keystoneID = Integer.parseInt(keystone.getString("id"));
+                String image_url = String.format(SPELL_ICONS_ENDPOINT, keystone.getJSONObject("icon"));
+                spellData.put(keystoneID, image_url);
             }
         } catch (JSONException e) {
             Log.i(TAG, "Ran into jsonException: " + e);
