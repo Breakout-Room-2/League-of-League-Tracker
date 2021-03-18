@@ -182,7 +182,9 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     }
 
     private void setRank() {
-        tvRank.setText(leagues.get(League.getHigherLeague(leagues)).getRanking());
+        int index = League.getHigherLeague(leagues);
+        if (index != -1)
+            tvRank.setText(leagues.get(index).getRanking());
     }
 
     private void setMastery() {
