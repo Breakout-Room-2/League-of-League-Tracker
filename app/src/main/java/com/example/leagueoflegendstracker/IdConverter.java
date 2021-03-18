@@ -21,13 +21,13 @@ import okhttp3.Headers;
 public class IdConverter {
     private static final String TAG = "IdConverter";
     private static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/champion.json";
-    private static final String SPELL_DATA = "http://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/summoner.json";
-    private static final String RUNES_DATA = "http://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/runesReforged.json";
-    private static final String QUEUE_DATA = "http://static.developer.riotgames.com/docs/lol/queues.json";
+    private static final String SPELL_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/summoner.json";
+    private static final String RUNES_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/runesReforged.json";
+    private static final String QUEUE_DATA = "https://static.developer.riotgames.com/docs/lol/queues.json";
     private static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
-    private static final String SPELL_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
+    private static final String SPELL_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
     private static final String RUNES_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/img/%s";
-    private static final String ITEMS_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/%s.png";
+    private static final String ITEMS_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/%s.png";
     private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
 
     private static final HashMap<Integer, String> champData = new HashMap<>();
