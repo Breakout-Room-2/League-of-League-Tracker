@@ -10,11 +10,13 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Queue;
 
 import okhttp3.Headers;
 
@@ -22,6 +24,7 @@ public class IdConverter {
     private static final String TAG = "IdConverter";
     private static final String CHAMP_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/champion.json";
     private static final String SPELL_DATA = "http://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/summoner.json";
+    private static final String QUEUE_DATA = "http://static.developer.riotgames.com/docs/lol/queues.json";
     private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
     private static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
     private static final String SPELL_ICONS_ENDPOINT    = "http://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
@@ -29,6 +32,7 @@ public class IdConverter {
 
     private static HashMap<Integer, String> champData = new HashMap<>();
     private static HashMap<Integer, String> spellData = new HashMap<>();
+    private static HashMap<Integer, String> queueData = new HashMap<>();
 
     private static AsyncHttpClient client = new AsyncHttpClient();
     private static RequestParams params = new RequestParams();
@@ -63,6 +67,32 @@ public class IdConverter {
 
     private static void loadIcon(Context context, ImageView view, int ID, String ENDPOINT){
         loadIcon(context, view, String.valueOf(ID), ENDPOINT);
+    }
+
+    public static void loadQueueType(Context context, TextView view, int queueID){
+        // All initial calls will have an empty HashMap since they're called in series and the
+        // network call isn't completed until waay later. Still necessary since getChampData will
+        // call loadChampIcon after the network call - thus just needed to avoid infinite looping
+        if (queueData.isEmpty()){
+            setupQueueData();
+        } else {
+            view.setText(queueData.get(queueID));
+        }
+    }
+
+    public static void setupQueueData(){
+        queueData.put(400, "SR - Draft");
+        queueData.put(420, "SR - Solo");
+        queueData.put(430, "SR - Blind");
+        queueData.put(440, "SR - Flex");
+        queueData.put(700, "SR - Clash");
+        queueData.put(830, "SR - Intro Bots");
+        queueData.put(840, "SR - Begin Bots");
+        queueData.put(850, "SR - Inter Bots");
+        queueData.put(900, "SR - URF");
+        queueData.put(1010, "SR - ARURF");
+        queueData.put(1020, "SR - One For All");
+        queueData.put(450, "HA - ARAM");
     }
 
     public static void loadChampName(Context context, TextView view, int champID){
