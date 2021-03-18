@@ -25,7 +25,7 @@ public class IdConverter {
     private static final String RUNES_DATA = "https://ddragon.leagueoflegends.com/cdn/11.6.1/data/en_US/runesReforged.json";
     private static final String QUEUE_DATA = "https://static.developer.riotgames.com/docs/lol/queues.json";
     private static final String CHAMP_ICONS_ENDPOINT    = "https://cdn.communitydragon.org/latest/champion/%s/square";
-    private static final String SPELL_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s";
+    private static final String SPELL_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/11.6.1/img/spell/%s.png";
     private static final String RUNES_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/img/%s";
     private static final String ITEMS_ICONS_ENDPOINT    = "https://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/%s.png";
     private static final String SUMMONER_ICONS_ENDPOINT = "https://cdn.communitydragon.org/latest/profile-icon/%s";
@@ -176,8 +176,8 @@ public class IdConverter {
             for (Iterator<String> keys = data.keys(); keys.hasNext(); ) {
                 JSONObject spell = data.getJSONObject(keys.next());
                 int spellID = Integer.parseInt(spell.getString("key"));
-                String image_url = String.format(SPELL_ICONS_ENDPOINT, spell.getJSONObject("image").getString("full"));
-                spellData.put(spellID, image_url);
+                String spellKey = spell.getString("id");
+                spellData.put(spellID, spellKey);
             }
         } catch (JSONException e) {
             Log.i(TAG, "Ran into jsonException: " + e);
