@@ -57,18 +57,21 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
 
         private final String KDA = "%d/%d/%d";
 
-        ImageView ivChampionBox, ivitem1, ivitem2, ivitem3, ivitem4, ivitem5, ivitem6;
+        ImageView ivChampionBox, ivSpell1, ivSpell2, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
         TextView tvChampName, tvLevel, tvKDA, tvCS, tvDuration, tvMode;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivChampionBox   = itemView.findViewById(R.id.ivChampionBox);
-            ivitem1         = itemView.findViewById(R.id.ivItem1);
-            ivitem2         = itemView.findViewById(R.id.ivItem2);
-            ivitem3         = itemView.findViewById(R.id.ivItem3);
-            ivitem4         = itemView.findViewById(R.id.ivItem4);
-            ivitem5         = itemView.findViewById(R.id.ivItem5);
-            ivitem6         = itemView.findViewById(R.id.ivItem6);
+            ivSpell1        = itemView.findViewById(R.id.ivSpell1);
+            ivSpell2        = itemView.findViewById(R.id.ivSpell2);
+            ivItem1 = itemView.findViewById(R.id.ivItem1);
+            ivItem2 = itemView.findViewById(R.id.ivItem2);
+            ivItem3 = itemView.findViewById(R.id.ivItem3);
+            ivItem4         = itemView.findViewById(R.id.ivItem4);
+            ivItem5         = itemView.findViewById(R.id.ivItem5);
+            ivItem6         = itemView.findViewById(R.id.ivItem6);
+            ivItem7         = itemView.findViewById(R.id.ivItem7);
             tvChampName     = itemView.findViewById(R.id.tvChampName);
             tvLevel         = itemView.findViewById(R.id.tvLevel);
             tvKDA           = itemView.findViewById(R.id.tvKDA);
@@ -79,24 +82,22 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
 
         public void bind(MatchSummary match) {
             MatchSummary.Participant user = match.getUserParticipant();
+            MatchSummary.Participant.Stats userStats = user.getStats();
+            int[] userItems = userStats.getItems();
+
             IdConverter.loadChampName(context, tvChampName, match.getChampion());
             IdConverter.loadChampIcon(context, ivChampionBox, match.getChampion());
-            MatchSummary.Participant.Stats userStats = user.getStats();
-
-            int[] userItems = userStats.getItems();
-            int kills    = userStats.getKills();
-            int deaths   = userStats.getDeaths();
-            int assists  = userStats.getAssists();
-            int queueId = match.getQueueID();
-            tvKDA.setText(String.format(Locale.US, KDA, kills, deaths, assists));
-            IdConverter.loadItemIcon(context, ivitem1, userItems[0]);
-            IdConverter.loadItemIcon(context, ivitem2, userItems[1]);
-            IdConverter.loadItemIcon(context, ivitem3, userItems[2]);
-            IdConverter.loadItemIcon(context, ivitem4, userItems[3]);
-            IdConverter.loadItemIcon(context, ivitem5, userItems[4]);
-            IdConverter.loadItemIcon(context, ivitem6, userItems[6]);
-            IdConverter.loadQueueType(context, tvMode, queueId);
-
+            IdConverter.loadSpellIcon(context, ivSpell1, user.getSpell1());
+            IdConverter.loadSpellIcon(context, ivSpell2, user.getSpell2());
+            IdConverter.loadItemIcon(context, ivItem1, userItems[0]);
+            IdConverter.loadItemIcon(context, ivItem2, userItems[1]);
+            IdConverter.loadItemIcon(context, ivItem3, userItems[2]);
+            IdConverter.loadItemIcon(context, ivItem4, userItems[3]);
+            IdConverter.loadItemIcon(context, ivItem5, userItems[4]);
+            IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
+            IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
+            tvKDA.setText(String.format(Locale.US, KDA, userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
+            IdConverter.loadQueueType(context, tvMode, match.getQueueID());
         }
     }
 }
