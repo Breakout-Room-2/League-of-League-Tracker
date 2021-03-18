@@ -5,4 +5,5 @@
     <string name="search_icon">Magnifying glass search icon</string>
     <string name="title_icon">title icon to fill up blank space</string>
     <string name="summoner_level">Lvl %d</string>
+    <string name="unranked">Unranked</string>
 </resources>

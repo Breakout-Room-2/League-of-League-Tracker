@@ -183,7 +183,9 @@ public class SummonerDetailsActivity extends AppCompatActivity {
 
     private void setRank() {
         int index = League.getHigherLeague(leagues);
-        if (index != -1)
+        if (index == -1)
+            tvRank.setText(R.string.unranked);
+        else
             tvRank.setText(leagues.get(index).getRanking());
     }
 
