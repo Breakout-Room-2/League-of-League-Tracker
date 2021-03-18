@@ -47,7 +47,8 @@ public class IdConverter {
     }
 
     public static void loadItemIcon(Context context, ImageView view, int itemID){
-        loadIcon(context, view, itemID, ITEMS_ICONS_ENDPOINT);
+        if (itemID != 0)
+            loadIcon(context, view, itemID, ITEMS_ICONS_ENDPOINT);
     }
 
     public static void loadSpellIcon(Context context, ImageView view, int spellID){
