@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leagueoflegendstracker.models.MatchSummary;
@@ -55,10 +56,9 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final String KDA = "%d/%d/%d";
-
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
-        TextView tvChampName, tvLevel, tvKDA, tvCS, tvDuration, tvMode;
+        TextView tvChampName, tvLevel, tvKDA, tvCS, tvDuration, tvMode, tvMatchResults;
+        View matchView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +78,8 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             tvCS            = itemView.findViewById(R.id.tvCS);
             tvDuration      = itemView.findViewById(R.id.tvDuration);
             tvMode          = itemView.findViewById(R.id.tvMode);
+            tvMatchResults  = itemView.findViewById(R.id.tvMatchResult);
+            matchView       = itemView;
         }
 
         public void bind(MatchSummary match) {
@@ -85,6 +87,16 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             MatchSummary.Participant.Stats userStats = user.getStats();
             int[] userItems = userStats.getItems();
 
+            if (match.isWin()) {
+                tvMatchResults.setText(R.string.victory);
+                matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
+            } else {
+                tvMatchResults.setText(R.string.defeat);
+            }
+
+            tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
+            tvLevel.setText(String.format(Locale.US, "lvl %d", userStats.getLevel()));
+            tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
             IdConverter.loadChampName(context, tvChampName, match.getChampion());
             IdConverter.loadChampIcon(context, ivChampionBox, match.getChampion());
             IdConverter.loadSpellIcon(context, ivSpell1, user.getSpell1());
@@ -96,7 +108,6 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             IdConverter.loadItemIcon(context, ivItem5, userItems[4]);
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
-            tvKDA.setText(String.format(Locale.US, KDA, userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
             IdConverter.loadQueueType(context, tvMode, match.getQueueID());
         }
     }
