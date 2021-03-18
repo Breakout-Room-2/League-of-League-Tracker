@@ -82,11 +82,21 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             IdConverter.loadChampName(context, tvChampName, match.getChampion());
             IdConverter.loadChampIcon(context, ivChampionBox, match.getChampion());
             MatchSummary.Participant.Stats userStats = user.getStats();
+
             int[] userItems = userStats.getItems();
             int kills    = userStats.getKills();
             int deaths   = userStats.getDeaths();
             int assists  = userStats.getAssists();
+            int queueId = match.getQueueID();
             tvKDA.setText(String.format(Locale.US, KDA, kills, deaths, assists));
+            IdConverter.loadItemIcon(context, ivitem1, userItems[0]);
+            IdConverter.loadItemIcon(context, ivitem2, userItems[1]);
+            IdConverter.loadItemIcon(context, ivitem3, userItems[2]);
+            IdConverter.loadItemIcon(context, ivitem4, userItems[3]);
+            IdConverter.loadItemIcon(context, ivitem5, userItems[4]);
+            IdConverter.loadItemIcon(context, ivitem6, userItems[6]);
+            IdConverter.loadQueueType(context, tvMode, queueId);
+
         }
     }
 }
