@@ -1,10 +1,12 @@
 package com.example.leagueoflegendstracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leagueoflegendstracker.models.MatchSummary;
+import com.example.leagueoflegendstracker.models.Participant;
+import com.example.leagueoflegendstracker.models.Stats;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 import java.util.Locale;
@@ -58,16 +64,16 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
 
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
         TextView tvChampName, tvLevel, tvKDA, tvCS, tvTimeStamp, tvDuration, tvMode, tvMatchResults;
-        View matchView;
+        RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivChampionBox   = itemView.findViewById(R.id.ivChampionBox);
             ivSpell1        = itemView.findViewById(R.id.ivSpell1);
             ivSpell2        = itemView.findViewById(R.id.ivSpell2);
-            ivItem1 = itemView.findViewById(R.id.ivItem1);
-            ivItem2 = itemView.findViewById(R.id.ivItem2);
-            ivItem3 = itemView.findViewById(R.id.ivItem3);
+            ivItem1         = itemView.findViewById(R.id.ivItem1);
+            ivItem2         = itemView.findViewById(R.id.ivItem2);
+            ivItem3         = itemView.findViewById(R.id.ivItem3);
             ivItem4         = itemView.findViewById(R.id.ivItem4);
             ivItem5         = itemView.findViewById(R.id.ivItem5);
             ivItem6         = itemView.findViewById(R.id.ivItem6);
@@ -80,23 +86,23 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             tvDuration      = itemView.findViewById(R.id.tvDuration);
             tvMode          = itemView.findViewById(R.id.tvMode);
             tvMatchResults  = itemView.findViewById(R.id.tvMatchResult);
-            matchView       = itemView;
+            container       = itemView.findViewById(R.id.container);
         }
 
         public void bind(MatchSummary match) {
-            MatchSummary.Participant user = match.getUserParticipant();
-            MatchSummary.Participant.Stats userStats = user.getStats();
+            Participant user = match.getUserParticipant();
+            Stats userStats = user.getStats();
             int[] userItems = userStats.getItems();
 
             if (TimeFormatter.getTimeMinutes(match.getGameDuration()) > 5) {
                 if (match.isWin()) {
                     tvMatchResults.setText(R.string.victory);
                     tvMatchResults.setTextColor(ContextCompat.getColor(context, R.color.victory_blue));
-                    matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
+                    container.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
                 } else {
                     tvMatchResults.setText(R.string.defeat);
                     tvMatchResults.setTextColor(ContextCompat.getColor(context, R.color.defeat_red));
-                    matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.light_red_background));
+                    container.setBackground(ContextCompat.getDrawable(context, R.drawable.light_red_background));
                 }
             }
 
@@ -117,6 +123,15 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
             IdConverter.loadQueueType(context, tvMode, match.getQueueID());
+
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, MatchDetailsActivity.class);
+                    i.putExtra("match", Parcels.wrap(match));
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }
