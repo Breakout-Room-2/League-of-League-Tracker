@@ -19,14 +19,17 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // file contains key
+        // file contains key and expiration date
         buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+        buildConfigField("String", "EXP_DATE", apikeyProperties['EXP_DATE'])
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
     compileOptions {

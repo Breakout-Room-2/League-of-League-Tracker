@@ -89,8 +89,8 @@ function writeApiKey($dev_page){
         $date = $date -replace $_;
     }
 
-# Convert to DateTime and write key/date combo to apikey.properties
-    $date = (Get-Date $date).toString();
+# Convert to UnixEpochMilliseconds and write key/date combo to apikey.properties
+    $date = ((Get-Date $date -AsUTC) - (Get-Date -UnixTimeSeconds 0 -AsUTC)).totalMilliseconds;
 
     Write-Output "API_KEY = `"$key`"`nEXP_DATE = `"$date`"" > apikey.properties;
 }
@@ -104,7 +104,7 @@ function writeApiKey($dev_page){
 # expired - skipping the main body of code if the key is fine
 if (Test-Path apikey.properties){
     Write-Host $key_exists_msg;
-    $date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+    $date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
     if ($(getTimeLeft($date)) -gt 0) {
         return;
     }
@@ -149,7 +149,7 @@ $dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session -UseBasicParsin
 # Finally write the api key and expiration date to apikey.properties file
 writeApiKey($dev_page);      
 Write-Host -ForegroundColor Green $writing_msg
-$date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+$date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
 
 # Check that key hasn't expired, prompting user to regen if needed
 # continue by rewriting apikey.properties file 
@@ -157,6 +157,6 @@ while ($(getTimeLeft($date)) -le 0){
     $dev_page = Invoke-WebRequest -Uri $login_url -WebSession $session -UseBasicParsing;
     writeApiKey($dev_page);
 
-    $date = Get-Date ((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ");
+    $date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
 }
 # ----------------------------------------------------------------------------

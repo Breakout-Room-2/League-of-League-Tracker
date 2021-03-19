@@ -8,8 +8,8 @@ import java.util.Locale;
  * String representing the relative time difference "30s ago", "2m ago", "6d ago"
  */
 public class TimeFormatter {
-    public  static String getTimeDifference(long timeStamp){
-        // base string to build up
+    public static String getTimeDifference(long timeStamp){
+        // base String to build up
         String time;
 
         // Convert difference from ms to s
@@ -26,5 +26,19 @@ public class TimeFormatter {
             time = String.format(Locale.US, "%dd ago", diff / (60*60*24));
 
         return time;
+    }
+
+    public static String getTimeDuration(long duration){
+        int minutes = (int) (duration/1000) / 60;
+        int seconds = (int) (duration/1000) % 60;
+        return String.format(Locale.US, "%dm %ds", minutes, seconds);
+    }
+
+    public static String getTimeLeft(long diff){
+        int seconds = (int)(diff/1000);
+        int hours   = seconds / (60*60);
+        int minutes = (seconds % (60*60)) / (60);
+
+        return String.format(Locale.US, "%dh %dm", hours, minutes);
     }
 }
