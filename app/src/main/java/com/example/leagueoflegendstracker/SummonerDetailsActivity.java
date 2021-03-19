@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -22,6 +22,7 @@ import com.example.leagueoflegendstracker.models.Summoner;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.Headers;
 
@@ -96,6 +97,8 @@ public class SummonerDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "Failure, with resp: "+response);
+                Toast.makeText(SummonerDetailsActivity.this, String.format(Locale.US, "Summoner [%s] not found!", summonerName), Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
