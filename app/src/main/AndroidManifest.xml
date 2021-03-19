@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SummonerDetailsActivity" />
+        <activity android:name=".MatchDetailsActivity"/>
     </application>
 
 </manifest>
