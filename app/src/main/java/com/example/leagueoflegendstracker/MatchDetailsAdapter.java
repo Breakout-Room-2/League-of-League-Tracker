@@ -88,11 +88,16 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             MatchSummary.Participant.Stats userStats = user.getStats();
             int[] userItems = userStats.getItems();
 
-            if (match.isWin()) {
-                tvMatchResults.setText(R.string.victory);
-                matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
-            } else {
-                tvMatchResults.setText(R.string.defeat);
+            if (TimeFormatter.getTimeMinutes(match.getGameDuration()) > 5) {
+                if (match.isWin()) {
+                    tvMatchResults.setText(R.string.victory);
+                    tvMatchResults.setTextColor(ContextCompat.getColor(context, R.color.victory_blue));
+                    matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
+                } else {
+                    tvMatchResults.setText(R.string.defeat);
+                    tvMatchResults.setTextColor(ContextCompat.getColor(context, R.color.defeat_red));
+                    matchView.setBackground(ContextCompat.getDrawable(context, R.drawable.light_red_background));
+                }
             }
 
             tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
