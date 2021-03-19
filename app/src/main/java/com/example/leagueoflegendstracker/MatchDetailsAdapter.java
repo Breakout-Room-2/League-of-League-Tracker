@@ -57,7 +57,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
-        TextView tvChampName, tvLevel, tvKDA, tvCS, tvDuration, tvMode, tvMatchResults;
+        TextView tvChampName, tvLevel, tvKDA, tvCS, tvTimeStamp, tvDuration, tvMode, tvMatchResults;
         View matchView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,6 +76,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             tvLevel         = itemView.findViewById(R.id.tvLevel);
             tvKDA           = itemView.findViewById(R.id.tvKDA);
             tvCS            = itemView.findViewById(R.id.tvCS);
+            tvTimeStamp     = itemView.findViewById(R.id.tvTimestamp);
             tvDuration      = itemView.findViewById(R.id.tvDuration);
             tvMode          = itemView.findViewById(R.id.tvMode);
             tvMatchResults  = itemView.findViewById(R.id.tvMatchResult);
@@ -97,6 +98,8 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
             tvLevel.setText(String.format(Locale.US, "lvl %d", userStats.getLevel()));
             tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
+            tvTimeStamp.setText(TimeFormatter.getTimeDifference(match.getTimeStamp()));
+            tvDuration.setText(TimeFormatter.getTimeDuration(match.getGameDuration()));
             IdConverter.loadChampName(context, tvChampName, match.getChampion());
             IdConverter.loadChampIcon(context, ivChampionBox, match.getChampion());
             IdConverter.loadSpellIcon(context, ivSpell1, user.getSpell1());

@@ -29,15 +29,19 @@ public class TimeFormatter {
     }
 
     public static String getTimeDuration(long duration){
-        int minutes = (int) (duration/1000) / 60;
-        int seconds = (int) (duration/1000) % 60;
+        int minutes = (int) duration / 60;
+        int seconds = (int) duration % 60;
         return String.format(Locale.US, "%dm %ds", minutes, seconds);
     }
 
+    // To check matchDuration < 5 (remake)
+    public static int getTimeMinutes(long duration){
+        return (int) duration / 60;
+    }
+
     public static String getTimeLeft(long diff){
-        int seconds = (int)(diff/1000);
-        int hours   = seconds / (60*60);
-        int minutes = (seconds % (60*60)) / (60);
+        int hours   = (int) (diff / 1000) / (60*60);
+        int minutes = ((int) (diff / 1000)  % (60*60)) / (60);
 
         return String.format(Locale.US, "%dh %dm", hours, minutes);
     }
