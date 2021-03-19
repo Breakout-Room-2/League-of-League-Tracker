@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 @Parcel
 public class MatchSummary {
     long gameID, timeStamp, gameDuration;
     boolean win;
     int champion, queueID, userIndex;
+    int[] teams;
     Participant[] participants = new Participant[10];
 
     // Empty constructor required by Parceler library
@@ -36,13 +36,14 @@ public class MatchSummary {
         gameDuration = jsonObject.getLong("gameDuration");
         JSONArray participantIDs    = jsonObject.getJSONArray("participantIdentities");
         JSONArray participantsList  = jsonObject.getJSONArray("participants");
+        setTeams(jsonObject.getJSONArray("teams"));
 
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
             participants[i].setSummonerDetails(participantIDs.getJSONObject(i).getJSONObject("player"));
             if (participants[i].name.equals(userName)) {
                 userIndex = i;
-                win = (participants[i].team == getWinningTeam(jsonObject.getJSONArray("teams")));
+                win = (participants[i].team == teams[0]);
             }
         }
     }
@@ -51,13 +52,12 @@ public class MatchSummary {
         return participants[userIndex];
     }
 
-    // very ugly way of doing this - but what isn't ugly in this entire file?
-    private int getWinningTeam(JSONArray teams) throws JSONException{
+    private void setTeams(JSONArray teams) throws JSONException{
         JSONObject blue = teams.getJSONObject(0);
         JSONObject red  = teams.getJSONObject(1);
         if (blue.getString("win").equals("Win"))
-            return blue.getInt("teamId");
-        return red.getInt("teamId");
+            this.teams = new int[]{blue.getInt("teamId"), red.getInt("teamId")};
+        this.teams = new int[]{red.getInt("teamId"), blue.getInt("teamId")};
     }
 
     public long getGameID() {
@@ -96,7 +96,7 @@ public class MatchSummary {
         return null;
     }
 
-    public Participant[] getTeam(int teamID){
+    private Participant[] getTeam(int teamID){
         Participant[] team = new Participant[5];
         int i = 0;
         for (Participant participant : participants)
@@ -105,4 +105,11 @@ public class MatchSummary {
         return team;
     }
 
+    public Participant[] getWinningTeam() {
+        return getTeam(teams[0]);
+    }
+
+    public Participant[] getLosingTeam() {
+        return getTeam(teams[1]);
+    }
 }
