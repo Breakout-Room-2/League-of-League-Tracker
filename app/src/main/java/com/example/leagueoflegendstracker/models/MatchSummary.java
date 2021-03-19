@@ -3,15 +3,20 @@ package com.example.leagueoflegendstracker.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+@Parcel
 public class MatchSummary {
     long gameID, timeStamp, gameDuration;
     boolean win;
     int champion, queueID, userIndex;
     Participant[] participants = new Participant[10];
+
+    // Empty constructor required by Parceler library
+    public MatchSummary() {}
 
     public MatchSummary(JSONObject jsonObject) throws JSONException {
         gameID      = jsonObject.getLong("gameId");
