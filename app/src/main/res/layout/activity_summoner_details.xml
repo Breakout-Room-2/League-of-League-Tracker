@@ -60,9 +60,9 @@
         android:layout_weight="1"
         android:elevation="3dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Zhj"
+        android:text="Aomine l Tetsuya"
         android:textColor="@color/white"
-        android:textSize="30dp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/tvRank"
