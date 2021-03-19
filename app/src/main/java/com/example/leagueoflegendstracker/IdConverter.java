@@ -86,11 +86,9 @@ public class IdConverter {
         // All initial calls will have an empty HashMap since they're called in series and the
         // network call isn't completed until waay later. Still necessary since getChampData will
         // call loadChampIcon after the network call - thus just needed to avoid infinite looping
-        if (queueData.isEmpty()){
+        if (queueData.isEmpty())
             setupQueueData();
-        } else {
-            view.setText(queueData.get(queueID));
-        }
+        view.setText(queueData.get(queueID));
     }
 
     public static void setupQueueData(){
