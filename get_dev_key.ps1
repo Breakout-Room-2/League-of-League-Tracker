@@ -74,6 +74,15 @@ function getUserCred(){
     return $data;
 }
 
+# Parses EXP_DATE from file, then converts from milliseconds to seconds
+# Next converts to UnixEpochTime by adding seconds
+# Finally converts from UTC to local time (will later compare against current time)
+function getDate($apikeyFile){
+    $contents = (Get-Content $apikeyFile | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ";
+    $seconds = $contents/1000;
+    return ((Get-Date 01.01.1970) + ([System.TimeSpan]::FromSeconds($seconds))).ToLocalTime();
+}
+
 # Helper function to parse the dev page for apikey and expiration date,
 # and write to apikey.properties file
 function writeApiKey($dev_page){
@@ -90,9 +99,9 @@ function writeApiKey($dev_page){
     }
 
 # Convert to UnixEpochMilliseconds and write key/date combo to apikey.properties
-    $date = ((Get-Date $date -AsUTC) - (Get-Date -UnixTimeSeconds 0 -AsUTC)).totalMilliseconds;
+    $date = ((Get-Date $date).ToUniversalTime() - (Get-Date 01.01.1970)).totalMilliseconds;
 
-    Write-Output "API_KEY = `"$key`"`nEXP_DATE = `"$date`"" > apikey.properties;
+    Write-Output "API_KEY = `"$key`"`nEXP_DATE = `"$date`"" | Out-File apikey.properties -Encoding ASCII;
 }
 # ----------------------------------------------------------------------------
 #                   End of Helper Functions
@@ -104,7 +113,7 @@ function writeApiKey($dev_page){
 # expired - skipping the main body of code if the key is fine
 if (Test-Path apikey.properties){
     Write-Host $key_exists_msg;
-    $date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
+    $date = getDate('apikey.properties');
     if ($(getTimeLeft($date)) -gt 0) {
         return;
     }
@@ -149,7 +158,7 @@ $dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session -UseBasicParsin
 # Finally write the api key and expiration date to apikey.properties file
 writeApiKey($dev_page);      
 Write-Host -ForegroundColor Green $writing_msg
-$date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
+$date = getDate('apikey.properties');
 
 # Check that key hasn't expired, prompting user to regen if needed
 # continue by rewriting apikey.properties file 
@@ -157,6 +166,6 @@ while ($(getTimeLeft($date)) -le 0){
     $dev_page = Invoke-WebRequest -Uri $login_url -WebSession $session -UseBasicParsing;
     writeApiKey($dev_page);
 
-    $date = Get-Date -UnixTimeSeconds (((Get-Content apikey.properties | Select-String "EXP_DATE") -replace '"' -replace "EXP_DATE = ")/1000);
+    $date = getDate('apikey.properties');
 }
 # ----------------------------------------------------------------------------
