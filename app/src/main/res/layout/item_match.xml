@@ -9,7 +9,7 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:padding="5dp"
-    android:background="@drawable/light_red_background"
+    android:background="@drawable/light_grey_background"
     >
 
     <androidx.cardview.widget.CardView
@@ -96,7 +96,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="3dp"
-        android:textColor="@color/defeat_red"
+        android:textColor="@color/grey"
         android:layout_toEndOf="@+id/cvChamp"
         tools:text="DEFEAT" />
 
