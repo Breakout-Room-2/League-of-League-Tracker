@@ -188,81 +188,167 @@
         android:layout_toEndOf="@+id/cvChamp"
         android:text="20,000"
         android:textSize="9sp" />
-
     <TableLayout
+        android:id="@+id/items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/cvChamp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="0dp"
-        android:background="@color/white">
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="0dp">
 
         <TableRow>
-            <ImageView
-                android:id="@+id/ivItem1"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
-            <ImageView
-                android:id="@+id/ivItem2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem2"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
-            <ImageView
-                android:id="@+id/ivItem3"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem2"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem3"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+
         </TableRow>
-        <TableRow>
-            <ImageView
-                android:id="@+id/ivItem4"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
 
-            <ImageView
-                android:id="@+id/ivItem5"
+        <TableRow>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem4"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
-            <ImageView
-                android:id="@+id/ivItem6"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem4"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem5"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="centerCrop"
-                tools:ignore="RtlSymmetry" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem5"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem6"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem6"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
         </TableRow>
     </TableLayout>
-
     <TableLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toEndOf="@+id/cvChamp"
-    android:layout_marginStart="219.5dp"
-    android:layout_marginTop="7.5dp"
-    android:background="@color/white">
-    <TableRow>
+        android:id="@+id/items1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/items"
+        android:layout_marginTop="8dp">
+        <TableRow>
 
-        <ImageView
-            android:id="@+id/ivItem7"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            tools:srcCompat="@tools:sample/avatars"
-            android:scaleType="centerCrop"
-            tools:ignore="RtlSymmetry" />
-    </TableRow>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvItem7"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="3dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                app:cardBackgroundColor="@color/opacity_50_black"
+                app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/ivItem7"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:scaleType="centerCrop"
+                    tools:ignore="RtlSymmetry" />
+            </androidx.cardview.widget.CardView>
+        </TableRow>
     </TableLayout>
 
     <ImageView

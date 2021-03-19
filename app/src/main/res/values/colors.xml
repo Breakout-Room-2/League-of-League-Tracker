@@ -20,4 +20,7 @@
     <color name="lightGrey">#C4C4C4</color>
     <color name="lighter_blue">#ACD7FF</color>
     <color name="light_red">#FFB2B2</color>
+    <color name="opacity_50_black">#40000000</color>
+    <color name="defeat_red">#990000</color>
+    <color name="victory_blue">#003686</color>
 </resources>
