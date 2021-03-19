@@ -53,14 +53,14 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="170dp"
         android:layout_marginLeft="160dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:elevation="3dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Summoner"
+        android:text="Zhj"
         android:textColor="@color/white"
         android:textSize="30dp" />
 
@@ -70,14 +70,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSummonerName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="160dp"
-        android:layout_marginLeft="160dp"
+        android:layout_marginStart="170dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:elevation="3dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Rank"
+        android:text="Unranked"
         android:textColor="@color/white"
         android:textSize="20dp" />
 

@@ -137,8 +137,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/cvChamp"
         tools:text="K/D/A" />
 
@@ -147,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvKDA"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="0dp"
         android:textSize="10sp"
         android:layout_toEndOf="@+id/cvChamp"
@@ -158,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLevel"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/cvChamp"
         android:textSize="10sp"
