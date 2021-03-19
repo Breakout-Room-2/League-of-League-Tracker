@@ -25,11 +25,11 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        long diff = System.currentTimeMillis() - EXP_DATE;
+        long diff = EXP_DATE - System.currentTimeMillis();
         if (diff < 0)
             Toast.makeText(SearchActivity.this, String.format(Locale.US, "API Key expired %s ago!", TimeFormatter.getTimeLeft(-diff)), Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(SearchActivity.this, String.format(Locale.US, "API Key lasts %s!", TimeFormatter.getTimeLeft(diff)), Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchActivity.this, String.format(Locale.US, "API Key lasts for %s!", TimeFormatter.getTimeLeft(diff)), Toast.LENGTH_SHORT).show();
 
         etSummonerSearch = findViewById(R.id.etSummonerSearch);
         ivSearchButton = findViewById(R.id.ivSearchButton);
@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void goSummonerDetails(String summonerName) {
-        long diff = System.currentTimeMillis() - EXP_DATE;
+        long diff = EXP_DATE - System.currentTimeMillis();
         if (diff < 0) {
             Toast.makeText(SearchActivity.this, String.format(Locale.US, "API Key expired %s ago!", TimeFormatter.getTimeLeft(-diff)), Toast.LENGTH_SHORT).show();
             return;
