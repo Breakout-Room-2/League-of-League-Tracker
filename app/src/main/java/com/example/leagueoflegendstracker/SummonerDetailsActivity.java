@@ -3,6 +3,7 @@ package com.example.leagueoflegendstracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,21 +49,25 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     ArrayList<Mastery> top_masteries;
     ArrayList<League> leagues;
     ArrayList<MatchSummary> matchList;
-    RecyclerView rvMatches;
-    MatchDetailsAdapter adapter;
 
-    ImageView ivChampOne, ivChampTwo, ivChampThree, ivSummonerIcon;
+    ImageView ivSummonerIcon, ivBackArrow;
     TextView tvSummonerName, tvSummonerLevel, tvRank;
+
+    ImageView ivChampOne, ivChampTwo, ivChampThree;
     TextView tvChampOne, tvChampTwo, tvChampThree, tvMasteryOne, tvMasteryTwo, tvMasteryThree;
     DecimalFormat hundreds  = new DecimalFormat("### pts");
     DecimalFormat thousands = new DecimalFormat("###K pts");
     DecimalFormat millions  = new DecimalFormat("#.##M pts");
 
+    RecyclerView rvMatches;
+    MatchDetailsAdapter adapter;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summoner_details);
-//
+
         ivSummonerIcon  = findViewById(R.id.ivSummonerIcon);
+        ivBackArrow     = findViewById(R.id.ivBackArrow);
         tvSummonerName  = findViewById(R.id.tvSummonerName);
         tvSummonerLevel = findViewById(R.id.tvLevel);
         tvRank          = findViewById(R.id.tvRank);
@@ -106,6 +111,13 @@ public class SummonerDetailsActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "Failure, with resp: "+response);
                 Toast.makeText(SummonerDetailsActivity.this, String.format(Locale.US, "Summoner [%s] not found!", summonerName), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
