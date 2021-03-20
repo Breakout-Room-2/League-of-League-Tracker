@@ -21,6 +21,7 @@ import com.example.leagueoflegendstracker.models.Summoner;
 
 import org.json.JSONException;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -51,7 +52,11 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     MatchDetailsAdapter adapter;
 
     ImageView ivChampOne, ivChampTwo, ivChampThree, ivSummonerIcon;
-    TextView tvSummonerName, tvSummonerLevel, tvChampOne, tvChampTwo, tvChampThree, tvRank;
+    TextView tvSummonerName, tvSummonerLevel, tvRank;
+    TextView tvChampOne, tvChampTwo, tvChampThree, tvMasteryOne, tvMasteryTwo, tvMasteryThree;
+    DecimalFormat hundreds  = new DecimalFormat("### pts");
+    DecimalFormat thousands = new DecimalFormat("###K pts");
+    DecimalFormat millions  = new DecimalFormat("#.##M pts");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,10 @@ public class SummonerDetailsActivity extends AppCompatActivity {
         ivChampThree    = findViewById(R.id.ivChampThree);
         tvChampOne      = findViewById(R.id.tvChampOne);
         tvChampTwo      = findViewById(R.id.tvChampTwo);
-        tvChampThree    =  findViewById(R.id.tvChampThree);
+        tvChampThree    = findViewById(R.id.tvChampThree);
+        tvMasteryOne    = findViewById(R.id.tvMasteryPointsOne);
+        tvMasteryTwo    = findViewById(R.id.tvMasteryPointsTwo);
+        tvMasteryThree    = findViewById(R.id.tvMasteryPointsThree);
 
         rvMatches = findViewById(R.id.rvMatchHistory);
 
@@ -193,14 +201,29 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     }
 
     private void setMastery() {
-        int champOneID = top_masteries.get(0).getChampionID();
-        int champTwoID = top_masteries.get(1).getChampionID();
-        int champThreeID = top_masteries.get(2).getChampionID();
-        IdConverter.loadChampIcon(this, ivChampOne, champOneID);
-        IdConverter.loadChampIcon(this, ivChampTwo, champTwoID);
-        IdConverter.loadChampIcon(this, ivChampThree, champThreeID);
-        IdConverter.loadChampName(this, tvChampOne, champOneID);
-        IdConverter.loadChampName(this, tvChampTwo, champTwoID);
-        IdConverter.loadChampName(this, tvChampThree, champThreeID);
+        DecimalFormat df = new DecimalFormat("###,###,###");
+        int champOne    = top_masteries.get(0).getChampionID();
+        int champTwo    = top_masteries.get(1).getChampionID();
+        int champThree  = top_masteries.get(2).getChampionID();
+        String masteryOne   = formatPoints(top_masteries.get(0).getMasteryPoints());
+        String masteryTwo   = formatPoints(top_masteries.get(1).getMasteryPoints());
+        String masteryThree = formatPoints(top_masteries.get(2).getMasteryPoints());
+        IdConverter.loadChampIcon(this, ivChampOne, champOne);
+        IdConverter.loadChampIcon(this, ivChampTwo, champTwo);
+        IdConverter.loadChampIcon(this, ivChampThree, champThree);
+        IdConverter.loadChampName(this, tvChampOne, champOne);
+        IdConverter.loadChampName(this, tvChampTwo, champTwo);
+        IdConverter.loadChampName(this, tvChampThree, champThree);
+        tvMasteryOne.setText(masteryOne);
+        tvMasteryTwo.setText(masteryTwo);
+        tvMasteryThree.setText(masteryThree);
+    }
+
+    private String formatPoints(int points){
+        if (points < 1000)
+            return hundreds.format(points);
+        if (points < 1000000)
+            return thousands.format(points/1000);
+        return millions.format(points/10000);
     }
 }

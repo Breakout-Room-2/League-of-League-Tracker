@@ -8,4 +8,7 @@
     <string name="unranked">Unranked</string>
     <string name="victory">Victory</string>
     <string name="defeat">Defeat</string>
+    <string name="summoner_details_desc">Background for summoner specific details</string>
+    <string name="summoner_icon_desc">summoner icon</string>
+    <string name="champ_mastery_one_desc">Champion Mastery highest</string>
 </resources>
