@@ -358,7 +358,8 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="12dp"
-        app:srcCompat="@drawable/vision" />
+        android:elevation="1dp"
+        android:src="@drawable/vision" />
 
     <ImageView
         android:id="@+id/ivCoins"
@@ -368,7 +369,8 @@
         android:layout_marginTop="9dp"
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/tvGold"
-        app:srcCompat="@drawable/coins" />
+        android:elevation="1dp"
+        android:src="@drawable/coins" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/tvTime"-->

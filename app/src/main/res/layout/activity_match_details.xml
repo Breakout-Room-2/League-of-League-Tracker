@@ -42,11 +42,12 @@
         android:layout_marginTop="425dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibBackArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:elevation="1dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        app:srcCompat="@drawable/arrow_left_black" />
+        android:src="@drawable/arrow_left_black" />
 </RelativeLayout>
