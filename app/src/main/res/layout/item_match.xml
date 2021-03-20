@@ -12,6 +12,7 @@
     android:layout_marginRight="20dp"
     android:padding="5dp"
     android:background="@drawable/light_grey_background"
+    android:elevation="3dp"
     >
 
     <androidx.cardview.widget.CardView
