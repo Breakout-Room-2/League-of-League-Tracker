@@ -86,6 +86,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         app:cardCornerRadius="55dp"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp">
 
         <ImageView
