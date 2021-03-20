@@ -1,7 +1,6 @@
 package com.example.leagueoflegendstracker;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.leagueoflegendstracker.models.MatchSummary;
 import com.example.leagueoflegendstracker.models.Participant;
 import com.example.leagueoflegendstracker.models.Stats;
 
@@ -21,10 +19,10 @@ import java.util.Locale;
 
 public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.ViewHolder> {
     Context context;
-    List<Participant> matches;
-    public GameDetailsAdapter(Context context, List<Participant> matches) {
+    List<Participant> team;
+    public GameDetailsAdapter(Context context, List<Participant> team) {
         this.context = context;
-        this.matches = matches;
+        this.team = team;
     }
 
     @NonNull
@@ -36,17 +34,17 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Participant match = matches.get(position);
+        Participant match = team.get(position);
         holder.bind(match);
     }
 
     @Override
     public int getItemCount() {
-        return matches.size();
+        return team.size();
     }
 
     public void addAll(List<Participant> matchList) {
-        matches.addAll(matchList);
+        team.addAll(matchList);
         notifyDataSetChanged();
     }
 
@@ -74,13 +72,13 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             tvSummoner      = itemView.findViewById(R.id.tvSummoner);
         }
 
-        public void bind(Participant match) {
-            Stats userStats = match.getStats();
+        public void bind(Participant summoner) {
+            Stats userStats = summoner.getStats();
             tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
             tvLevel.setText(String.format(Locale.US, "lvl %d", userStats.getLevel()));
             tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
-            IdConverter.loadChampIcon(context, ivChampionBox, match.getChampion());
-            tvSummoner.setText(match.getName());
+            IdConverter.loadChampIcon(context, ivChampionBox, summoner.getChampion());
+            tvSummoner.setText(summoner.getName());
             int[] userItems = userStats.getItems();
             IdConverter.loadItemIcon(context, ivItem1, userItems[0]);
             IdConverter.loadItemIcon(context, ivItem2, userItems[1]);
@@ -89,8 +87,8 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             IdConverter.loadItemIcon(context, ivItem5, userItems[4]);
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
-            IdConverter.loadSpellIcon(context, ivSpell1, match.getSpell1());
-            IdConverter.loadSpellIcon(context, ivSpell2, match.getSpell2());
+            IdConverter.loadSpellIcon(context, ivSpell1, summoner.getSpell1());
+            IdConverter.loadSpellIcon(context, ivSpell2, summoner.getSpell2());
 
         }
     }
