@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.leagueoflegendstracker.models.Participant;
 import com.example.leagueoflegendstracker.models.Stats;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -104,8 +105,11 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
 
-            if(summoner.isWin())
+            if(summoner.isWin()) {
                 container.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
+                container.setMinimumHeight(120);
+                container.setPadding(15,15,15,15);
+            }
         }
     }
 }
