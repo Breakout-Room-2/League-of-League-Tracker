@@ -51,6 +51,11 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        DecimalFormat thousands = new DecimalFormat("#.00 K");
+        DecimalFormat tens      = new DecimalFormat("##.0 K");
+        DecimalFormat hundreds  = new DecimalFormat("### K");
+        DecimalFormat millions  = new DecimalFormat("#.00 M");
+
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivRune, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
         TextView tvSummoner, tvSummonerRank, tvLevel, tvKDA, tvCS, tvWards, tvControl, tvGold;
         RelativeLayout container;
@@ -91,7 +96,7 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
             tvWards.setText(String.format(Locale.US, "%d/%d", userStats.getWardsPlaced(), userStats.getVisionWards()));
             tvControl.setText(String.format(Locale.US, "%d", userStats.getVisionWards()));
-            tvGold.setText(String.format(Locale.US,"%d",userStats.getGoldEarned()));
+            tvGold.setText(formatCoins(userStats.getGoldEarned()));
 
             IdConverter.loadChampIcon(context, ivChampionBox, summoner.getChampion());
             IdConverter.loadSpellIcon(context, ivSpell1, summoner.getSpell1());
@@ -110,6 +115,18 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
                 container.setMinimumHeight(120);
                 container.setPadding(15,15,15,15);
             }
+        }
+
+        public String formatCoins(int coins){
+            if (coins < 1000)
+                return String.format(Locale.US,"%d", coins);
+            if (coins < 10000)
+                return thousands.format(coins/1000.0);
+            if (coins < 100000)
+                return tens.format(coins/(1000.0));
+            if (coins < 1000000)
+                return hundreds.format(coins/(1000.0));
+            return millions.format(coins/(1000*1000.0));
         }
     }
 }
