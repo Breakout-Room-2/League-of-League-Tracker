@@ -10,6 +10,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -189,8 +190,8 @@ public class IdConverter {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "Successful datadragon call to: " + RUNES_DATA);
                 // check to make sure you don't fill in the HashMap multiple times
-                if (spellData.isEmpty())
-                    fillRuneData(json.jsonObject);
+                if (runesData.isEmpty())
+                    fillRuneData(json.jsonArray);
                 loadRuneIcon(context, view, runeID);
             }
 
@@ -201,15 +202,25 @@ public class IdConverter {
         });
     }
 
-    private static void fillRuneData(JSONObject jsonObject){
+    private static void fillRuneData(JSONArray jsonArray){
         try {
-            JSONObject data = jsonObject.getJSONObject("data");
+            for (int i=0; i<jsonArray.length(); i++){
+                // setUp runePaths in case we use secondary runePaths
+                JSONObject runePath = jsonArray.getJSONObject(i);
+                int runePathID  = Integer.parseInt(runePath.getString("id"));
+                String runeIcon = runePath.getString("icon");
+                runesData.put(runePathID, runeIcon);
 
-            for (Iterator<String> keys = data.keys(); keys.hasNext(); ) {
-                JSONObject keystone = data.getJSONObject(keys.next());
-                int keystoneID = Integer.parseInt(keystone.getString("id"));
-                String image_url = String.format(SPELL_ICONS_ENDPOINT, keystone.getJSONObject("icon"));
-                spellData.put(keystoneID, image_url);
+                // main use is for keystone ID --> icons
+                // they're found in the slots arrays first index (keystones) under an array named "runes"
+                // can potentially do this for the other runeSlots (indices 1-3)
+                JSONArray keystones = runePath.getJSONArray("slots").getJSONObject(0).getJSONArray("runes");
+                for (int j=0; j<keystones.length(); j++){
+                    JSONObject keystone = keystones.getJSONObject(j);
+                    int keystoneID  = Integer.parseInt(runePath.getString("id"));
+                    String keyIcon  = keystone.getString("icon");
+                    runesData.put(keystoneID, keyIcon);
+                }
             }
         } catch (JSONException e) {
             Log.i(TAG, "Ran into jsonException: " + e);
