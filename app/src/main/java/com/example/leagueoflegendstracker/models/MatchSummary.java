@@ -36,7 +36,8 @@ public class MatchSummary {
         gameDuration = jsonObject.getLong("gameDuration");
         JSONArray participantIDs    = jsonObject.getJSONArray("participantIdentities");
         JSONArray participantsList  = jsonObject.getJSONArray("participants");
-        setTeams(jsonObject.getJSONArray("teams"));
+        if (teams == null)
+            setTeams(jsonObject.getJSONArray("teams"));
 
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
@@ -57,7 +58,8 @@ public class MatchSummary {
         JSONObject red  = teams.getJSONObject(1);
         if (blue.getString("win").equals("Win"))
             this.teams = new int[]{blue.getInt("teamId"), red.getInt("teamId")};
-        this.teams = new int[]{red.getInt("teamId"), blue.getInt("teamId")};
+        else
+            this.teams = new int[]{red.getInt("teamId"), blue.getInt("teamId")};
     }
 
     public long getGameID() {
