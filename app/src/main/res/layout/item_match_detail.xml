@@ -120,17 +120,6 @@
         android:text="Summoner Name"
         android:textSize="10sp" />
 
-
-    <TextView
-        android:id="@+id/tvSummonerRank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="95dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/cvChamp"
-        android:text="Gold IV"
-        android:textSize="10sp" />
-
     <TextView
         android:id="@+id/tvKDA"
         android:layout_width="wrap_content"
