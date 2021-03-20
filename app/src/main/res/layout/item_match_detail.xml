@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/rvContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="40dp"
@@ -151,35 +153,32 @@
         android:text="300 CS"
         android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/tvP"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/cvChamp"
-        android:text="2"
-        android:textSize="10sp" />
+        android:layout_toEndOf="@+id/tvSummonerRank"
+        android:layout_alignTop="@+id/tvSummonerRank"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/cvChamp"
-        android:text="2"
-        android:textSize="10sp" />
+        <TextView
+            android:id="@+id/tvControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+            tools:text="2"
+            android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/tvC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="145dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/cvChamp"
-        android:text="2"
-        android:textSize="10sp" />
+        <TextView
+            android:id="@+id/tvWards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="22 / 2"
+            android:textSize="10sp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tvGold"
         android:layout_width="wrap_content"
@@ -372,15 +371,5 @@
         android:layout_toEndOf="@+id/tvGold"
         android:elevation="1dp"
         android:src="@drawable/coins" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/tvTime"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/tvCS"-->
-    <!--        android:layout_marginStart="130dp"-->
-    <!--        android:layout_marginTop="0dp"-->
-    <!--        android:layout_toEndOf="@+id/cvChamp"-->
-    <!--        tools:text="25 min ago" />-->
 
 </RelativeLayout>

@@ -50,15 +50,24 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivRune, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
-        TextView tvSummoner, tvLevel, tvKDA, tvCS, ivVision, tvP, tvK, tvC, tvGold;
+        TextView tvSummoner, tvSummonerRank, tvLevel, tvKDA, tvCS, tvWards, tvControl, tvGold;
         RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivRune          = itemView.findViewById(R.id.ivRune);
+            tvSummoner      = itemView.findViewById(R.id.tvSummoner);
+            tvSummonerRank  = itemView.findViewById(R.id.tvSummonerRank);
+            tvLevel         = itemView.findViewById(R.id.tvLevel);
+            tvKDA           = itemView.findViewById(R.id.tvKDA);
+            tvCS            = itemView.findViewById(R.id.tvCS);
+            tvWards         = itemView.findViewById(R.id.tvWards);
+            tvControl       = itemView.findViewById(R.id.tvControl);
+            tvGold          = itemView.findViewById(R.id.tvGold);
+
             ivChampionBox   = itemView.findViewById(R.id.ivChampionBox);
             ivSpell1        = itemView.findViewById(R.id.ivSpell1);
             ivSpell2        = itemView.findViewById(R.id.ivSpell2);
+            ivRune          = itemView.findViewById(R.id.ivRune);
             ivItem1         = itemView.findViewById(R.id.ivItem1);
             ivItem2         = itemView.findViewById(R.id.ivItem2);
             ivItem3         = itemView.findViewById(R.id.ivItem3);
@@ -66,20 +75,26 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             ivItem5         = itemView.findViewById(R.id.ivItem5);
             ivItem6         = itemView.findViewById(R.id.ivItem6);
             ivItem7         = itemView.findViewById(R.id.ivItem7);
-            tvLevel         = itemView.findViewById(R.id.tvLevel);
-            tvKDA           = itemView.findViewById(R.id.tvKDA);
-            tvCS            = itemView.findViewById(R.id.tvCS);
-            tvSummoner      = itemView.findViewById(R.id.tvSummoner);
+
+            container       = itemView.findViewById(R.id.rvContainer);
         }
 
         public void bind(Participant summoner) {
             Stats userStats = summoner.getStats();
-            tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
-            tvLevel.setText(String.format(Locale.US, "lvl %d", userStats.getLevel()));
-            tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
-            IdConverter.loadChampIcon(context, ivChampionBox, summoner.getChampion());
-            tvSummoner.setText(summoner.getName());
             int[] userItems = userStats.getItems();
+
+            tvSummoner.setText(summoner.getName());
+            tvLevel.setText(String.format(Locale.US, "lvl %d", userStats.getLevel()));
+            tvKDA.setText(String.format(Locale.US, "%d/%d/%d", userStats.getKills(), userStats.getDeaths(), userStats.getAssists()));
+            tvCS.setText(String.format(Locale.US, "%d CS", userStats.getCS()));
+            tvWards.setText(String.format(Locale.US, "%d/%d", userStats.getWardsPlaced(), userStats.getVisionWards()));
+            tvControl.setText(String.format(Locale.US, "%d", userStats.getVisionWards()));
+            tvGold.setText(String.format(Locale.US,"%d",userStats.getGoldEarned()));
+
+            IdConverter.loadChampIcon(context, ivChampionBox, summoner.getChampion());
+            IdConverter.loadSpellIcon(context, ivSpell1, summoner.getSpell1());
+            IdConverter.loadSpellIcon(context, ivSpell2, summoner.getSpell2());
+            IdConverter.loadRuneIcon(context, ivRune, userStats.getRunePrimary());
             IdConverter.loadItemIcon(context, ivItem1, userItems[0]);
             IdConverter.loadItemIcon(context, ivItem2, userItems[1]);
             IdConverter.loadItemIcon(context, ivItem3, userItems[2]);
@@ -87,9 +102,7 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             IdConverter.loadItemIcon(context, ivItem5, userItems[4]);
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
-            IdConverter.loadSpellIcon(context, ivSpell1, summoner.getSpell1());
-            IdConverter.loadSpellIcon(context, ivSpell2, summoner.getSpell2());
-            IdConverter.loadRuneIcon(context, ivRune, userStats.getRunePrimary());
+
         }
     }
 }
