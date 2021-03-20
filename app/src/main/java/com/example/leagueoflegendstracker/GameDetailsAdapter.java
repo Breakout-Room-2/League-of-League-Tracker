@@ -55,7 +55,7 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivChampionBox   = itemView.findViewById(R.id.ivChampionBox);
+            ivRune          = itemView.findViewById(R.id.ivRune);
             ivChampionBox   = itemView.findViewById(R.id.ivChampionBox);
             ivSpell1        = itemView.findViewById(R.id.ivSpell1);
             ivSpell2        = itemView.findViewById(R.id.ivSpell2);
@@ -89,7 +89,7 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
             IdConverter.loadSpellIcon(context, ivSpell1, summoner.getSpell1());
             IdConverter.loadSpellIcon(context, ivSpell2, summoner.getSpell2());
-
+            IdConverter.loadRuneIcon(context, ivRune, userStats.getRunePrimary());
         }
     }
 }
