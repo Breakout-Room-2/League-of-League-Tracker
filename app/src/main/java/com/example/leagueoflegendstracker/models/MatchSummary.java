@@ -42,9 +42,10 @@ public class MatchSummary {
         for(int i=0; i<10; i++){
             participants[i] = new Participant(participantsList.getJSONObject(i));
             participants[i].setSummonerDetails(participantIDs.getJSONObject(i).getJSONObject("player"));
+            participants[i].win = (participants[i].team == teams[0]);
             if (participants[i].name.equals(userName)) {
                 userIndex = i;
-                win = (participants[i].team == teams[0]);
+                win = participants[i].win;
             }
         }
     }

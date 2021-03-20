@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leagueoflegendstracker.models.Participant;
@@ -103,6 +104,8 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
             IdConverter.loadItemIcon(context, ivItem6, userItems[5]);
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
 
+            if(summoner.isWin())
+                container.setBackground(ContextCompat.getDrawable(context, R.drawable.lighter_blue_background));
         }
     }
 }

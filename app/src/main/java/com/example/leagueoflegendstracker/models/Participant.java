@@ -4,13 +4,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
-import java.util.Locale;
-
 @Parcel
 public class Participant{
     String name;
     int ID, champion, team, spell1, spell2, icon;
     Stats stats;
+
+    boolean win;
 
     // Parceler library requires an empty constructor
     public Participant(){}
@@ -56,6 +56,11 @@ public class Participant{
     public int getIcon() {
         return icon;
     }
+
+    public boolean isWin() {
+        return win;
+    }
+
 
     public Stats getStats() {
         return stats;
