@@ -100,25 +100,30 @@
             tools:ignore="RtlSymmetry" />
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/tvLevel"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/cvChamp"
-        tools:text="18"
-        android:textSize="10sp" />
+        android:layout_toEndOf="@id/cvChamp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        >
 
     <TextView
         android:id="@+id/tvSummoner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/cvChamp"
         tools:text="Summoner Name"
         android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tvLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        tools:text="18"
+        android:textSize="10sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
