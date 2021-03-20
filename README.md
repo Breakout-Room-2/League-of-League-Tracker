@@ -9,9 +9,9 @@
 **Required Must-have Stories**
 
  * [x] User can search stats by summoner name
- * [ ] User can view recent match history 
+ * [x] User can view recent match history 
  * [x] User can also see current ranking and average KDA
- * [ ] User can click/tap on a match for more info
+ * [x] User can click/tap on a match for more info
 
 **Optional Nice-to-have Stories**
 
@@ -25,7 +25,7 @@
    * Favourites/Recent searches bar
  * Summoner Stats screen (Stream/Feed)
    * List of recent matches with small amount of important stats on view
-   * Ranking (Tier and LP) details, win/loss pie chart, and average KDA for displayed matches listed near top of screen
+   * Ranking (Tier and LP) details and average KDA for displayed matches listed near top of screen
    * Should be able to click on match to get more detail (implementation tbd) 
  * Match detail screen / Dropdown? (TBD) 
 
