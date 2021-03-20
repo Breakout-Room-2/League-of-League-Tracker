@@ -308,7 +308,7 @@
         android:layout_marginTop="225dp" />
 
     <ImageButton
-        android:id="@+id/ibBackArrow"
+        android:id="@+id/ivBackArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
