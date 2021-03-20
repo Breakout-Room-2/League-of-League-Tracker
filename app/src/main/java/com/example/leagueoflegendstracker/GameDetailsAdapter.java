@@ -57,13 +57,12 @@ public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.
         DecimalFormat millions  = new DecimalFormat("#.00 M");
 
         ImageView ivChampionBox, ivSpell1, ivSpell2, ivRune, ivItem1, ivItem2, ivItem3, ivItem4, ivItem5, ivItem6, ivItem7;
-        TextView tvSummoner, tvSummonerRank, tvLevel, tvKDA, tvCS, tvWards, tvControl, tvGold;
+        TextView tvSummoner, tvLevel, tvKDA, tvCS, tvWards, tvControl, tvGold;
         RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvSummoner      = itemView.findViewById(R.id.tvSummoner);
-            tvSummonerRank  = itemView.findViewById(R.id.tvSummonerRank);
             tvLevel         = itemView.findViewById(R.id.tvLevel);
             tvKDA           = itemView.findViewById(R.id.tvKDA);
             tvCS            = itemView.findViewById(R.id.tvCS);
