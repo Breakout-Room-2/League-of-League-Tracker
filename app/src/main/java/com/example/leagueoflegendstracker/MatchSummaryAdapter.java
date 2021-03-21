@@ -22,12 +22,12 @@ import org.parceler.Parcels;
 import java.util.List;
 import java.util.Locale;
 
-public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapter.ViewHolder> {
+public class MatchSummaryAdapter extends RecyclerView.Adapter<MatchSummaryAdapter.ViewHolder> {
 
     Context context;
     List<MatchSummary>  matches;
 
-    public MatchDetailsAdapter(Context context, List<MatchSummary> matches) {
+    public MatchSummaryAdapter(Context context, List<MatchSummary> matches) {
         this.context = context;
         this.matches = matches;
     }
@@ -35,7 +35,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_match, parent, false);
+        View view  = LayoutInflater.from(context).inflate(R.layout.item_match_summary, parent, false);
         return new ViewHolder(view);
     }
 
@@ -124,13 +124,10 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             IdConverter.loadItemIcon(context, ivItem7, userItems[6]);
             IdConverter.loadQueueType(context, tvMode, match.getQueueID());
 
-            container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(context, MatchDetailsActivity.class);
-                    i.putExtra("match", Parcels.wrap(match));
-                    context.startActivity(i);
-                }
+            container.setOnClickListener(v -> {
+                Intent i = new Intent(context, MatchDetailsActivity.class);
+                i.putExtra("match", Parcels.wrap(match));
+                context.startActivity(i);
             });
         }
     }
