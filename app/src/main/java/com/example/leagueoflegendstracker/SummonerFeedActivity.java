@@ -3,7 +3,6 @@ package com.example.leagueoflegendstracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +27,9 @@ import java.util.Locale;
 
 import okhttp3.Headers;
 
-public class SummonerDetailsActivity extends AppCompatActivity {
+public class SummonerFeedActivity extends AppCompatActivity {
 
-    public static final String TAG      = "SummonerDetailsActivity";
+    public static final String TAG      = "SummonerFeedActivity";
     public static final String API_KEY  = BuildConfig.API_KEY;
 
     public static final String BASE_URL = "https://na1.api.riotgames.com%s";
@@ -60,7 +59,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     DecimalFormat millions  = new DecimalFormat("#.##M pts");
 
     RecyclerView rvMatches;
-    MatchDetailsAdapter adapter;
+    MatchSummaryAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,17 +109,12 @@ public class SummonerDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "Failure, with resp: "+response);
-                Toast.makeText(SummonerDetailsActivity.this, String.format(Locale.US, "Summoner [%s] not found!", summonerName), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SummonerFeedActivity.this, String.format(Locale.US, "Summoner [%s] not found!", summonerName), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
-        ivBackArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ivBackArrow.setOnClickListener(v -> finish());
     }
 
     private void setProfile() {
@@ -199,7 +193,7 @@ public class SummonerDetailsActivity extends AppCompatActivity {
     }
 
     private void fillRecycler() {
-        adapter = new MatchDetailsAdapter(this, matchList);
+        adapter = new MatchSummaryAdapter(this, matchList);
         rvMatches.setLayoutManager(new LinearLayoutManager(this));
         rvMatches.setAdapter(adapter);
     }

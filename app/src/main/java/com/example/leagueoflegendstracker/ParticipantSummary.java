@@ -19,10 +19,10 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class GameDetailsAdapter extends RecyclerView.Adapter<GameDetailsAdapter.ViewHolder> {
+public class ParticipantSummary extends RecyclerView.Adapter<ParticipantSummary.ViewHolder> {
     Context context;
     List<Participant> team;
-    public GameDetailsAdapter(Context context, List<Participant> team) {
+    public ParticipantSummary(Context context, List<Participant> team) {
         this.context = context;
         this.team = team;
     }
