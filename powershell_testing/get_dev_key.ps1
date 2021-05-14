@@ -54,6 +54,41 @@ function getUserCred(){
     return $data;
 }
 
+# Helper function to parse dev page for apikey and expiration date
+# - Update: figured out how to create an HTML element
+# Encode both date and key as secure strings and write to json file
+# - works for both versions of PS
+function parseForKey($dev_page) {
+    $html = New-Object -ComObject "HTMLFile";
+
+# Apparently HTMLFile object created will have different properties based off
+# whether Office is installed or not... 
+# link to the stack overflow: https://stackoverflow.com/a/48859819/13316141
+    try {
+        $html.IHTMLDocument2_write($dev_page.content);
+    } catch {
+        $src = [System.Text.Encoding]::Unicode.GetBytes($dev_page.content);
+        $html.write($src);
+    }
+
+# Find element holding expiration date and extract it's innerHTML
+# Run result through a series of regex replaces for cleaner conversion to DateTime
+    $date = ($html.getElementsByTagName('b') | Where-Object {$_.InnerText -like 'Expir*'}).InnerText;
+
+    @('Expire[sd]: ', '\(.*', '@', 'th', 'rd', 'nd', 'st') | ForEach-Object {
+        $date = $date -replace $_;
+    }
+
+    $date = Get-Date $date;
+    $key = $html.getElementById('apikey').value | ConvertTo-SecureString -AsPlainText -Force| ConvertFrom-SecureString;
+    
+    @{api_key=$key; exp_date=$date.DateTime} | ConvertTo-Json > dev_key
+}
+# ----------------------------------------------------------------------------
+#                   End of Helper Functions
+
+#                   Old Helper Functions that have been replaced
+# ----------------------------------------------------------------------------
 # Helper function to parse the dev page for apikey and expiration date,
 # encode as securestrings and write as json to a file
 # using Powershell V5
@@ -70,7 +105,7 @@ function parseForKeyV5($dev_page){
 
 # Get rid of extra space after converting to DateTime and 
 # encode api key as a secure string before writing to file
-    $date = Get-Date $date | sed -n '2p';
+    $date = Get-Date $date;
     $key  = $element.value | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString;
 
     @{api_key=$key; exp_date=$date} | ConvertTo-Json > dev_key;
@@ -100,7 +135,7 @@ function parseForKeyV7($dev_page){
     @{api_key=$key; exp_date=$date} | ConvertTo-Json > dev_key;
 }
 # ----------------------------------------------------------------------------
-#                   End of Helper Functions
+#                   End of old helper functions
 
 #                    Starting of main code
 # ----------------------------------------------------------------------------
@@ -141,13 +176,7 @@ Remove-Item $datafile;
 $dev_url = $oath_resp.response.parameters.uri;
 $dev_page = Invoke-WebRequest -Uri $dev_url -WebSession $session -UseBasicParsing; 
 
-# Depending on version of powershell, run the appropriate version of helper
-# and notify user of writing to file
-if((Get-Host).Version.Major -eq 5){
-# Turns out the -UseBasicParsing makes Invoke-WebRequest behave the same as V7...
-    parseForKeyV7($dev_page);      
-} else {
-    parseForKeyV7($dev_page);
-}
+parseForKey($dev_page);      
+
 Write-Host -ForegroundColor Green $writing_msg
 # ----------------------------------------------------------------------------
